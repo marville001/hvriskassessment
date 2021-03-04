@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
 const Login = () => {
-    
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -42,7 +42,8 @@ const Login = () => {
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlInput1">
               <Button
-                style={{ width: "150px" }}
+              className="btn-block"
+                // style={{ width: "150px" }}
                 onClick={formSubmit}
                 variant="primary"
                 type="submit"
