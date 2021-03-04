@@ -24,10 +24,6 @@ const NavBar = () => {
           </NavDropdown> */}
         </Nav >
         <Nav>
-          <Nav.Link href="/login">Login</Nav.Link>
-          <Nav.Link href="/">
-            Name
-          </Nav.Link>
           <NavDropdown title={"Profile"} id="collasible-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Martin Mwangi Wanjiku</NavDropdown.Item>
             
