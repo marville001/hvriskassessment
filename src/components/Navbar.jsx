@@ -1,11 +1,11 @@
 import React from "react";
 
-import {Navbar, Nav, } from 'react-bootstrap'
+import {Navbar, Nav, NavDropdown,} from 'react-bootstrap'
 
 const NavBar = () => {
   return (
     <Navbar className="app_navbar" fixed="top" collapseOnSelect expand="lg" variant="dark">
-      <Navbar.Brand href="/">Risk Assessment</Navbar.Brand>
+      <Navbar.Brand href="/">Employee Responder</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
@@ -22,12 +22,18 @@ const NavBar = () => {
               Separated link
             </NavDropdown.Item>
           </NavDropdown> */}
-        </Nav>
+        </Nav >
         <Nav>
           <Nav.Link href="/login">Login</Nav.Link>
           <Nav.Link href="/">
             Name
           </Nav.Link>
+          <NavDropdown title={"Profile"} id="collasible-nav-dropdown">
+            <NavDropdown.Item href="#action/3.1">Martin Mwangi Wanjiku</NavDropdown.Item>
+            
+            <NavDropdown.Item href="#action/3.3">Log out</NavDropdown.Item>
+          </NavDropdown>
+          <Nav.Link className="text-primary">Welcome Martin</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
