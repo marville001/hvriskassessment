@@ -1,14 +1,35 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { userLogin } from "../_actions/userActions";
 
-const Login = () => {
+const Login = (props) => {
+  const { loading, user, error } = useSelector((state) => state.userReducer);
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const userObj = {
+    email,
+    password,
+  };
+
+  useEffect(() => {
+    if (user._id) {
+      props.history.push("/");
+    }
+    return () => {};
+  }, [user]);
+
   const formSubmit = (e) => {
     e.preventDefault();
+    
+    dispatch(userLogin(userObj))
+    setEmail("")
+    setPassword("")
   };
 
   return (
@@ -16,6 +37,9 @@ const Login = () => {
       <Row className="form_container">
         <Col className="form_wrapper" sm={12} md={6} xl={4}>
           <h5 className="text-center p-3">Welcome Back. Please Login</h5>
+          {loading && <div >Loading...</div>}
+          {/* {error && <div className={styles.errorContainer}>{error}</div>} */}
+          {error && <div>{error}</div>}
           <Form>
             <Form.Group controlId="exampleForm.ControlInput1">
               <Form.Label>
@@ -42,7 +66,7 @@ const Login = () => {
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlInput1">
               <Button
-              className="btn-block"
+                className="btn-block"
                 // style={{ width: "150px" }}
                 onClick={formSubmit}
                 variant="primary"

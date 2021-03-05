@@ -36,7 +36,7 @@
 .session_progress_container{
   display: flex;
   justify-content: center;
-  padding: 30px 0px;
+  padding: 20px 0px;
 }
 .session_progress_item{
   display: flex;
@@ -59,7 +59,69 @@
   color: green;
 }
 @media screen and (max-width: 1200px){
-  .session_progress_item .text{
-    display: none;
-  }
+  
+}
+.ask{
+  color: red;
+  font-weight: bold;
+  display: inline;
+}
+
+/* Session Agent Identification */
+.si_container{
+  margin: 0px;
+  padding: 0px;
+  background-color: #eee;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.q_container{
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.q_container .q_num{
+  background-color: #fff;
+  padding: 5px 15px;
+  font-size: 25px;
+  border: 1px solid rgba(0, 0, 0,.7);
+  border-radius: 5px;
+
+}
+.q_container .q_text{
+  margin: 0px 15px;
+  font-size: 20px;
+}
+.q_container .q_text span{
+  background-color: #7e7e7e;
+  border-radius: 50%;
+  padding: 2px 5px;
+  color: #fff;
+}
+.q_container .q_buttons{
+  margin-left: auto;
+  flex-wrap: nowrap;
+}
+.q_container .q_buttons .q_button{
+  margin: 0px 10px;
+  padding: 10px 30px;
+}
+.item_container{
+  display: flex;
+  flex-direction: column;
+  margin: 0px -15px;
+}
+.item_container:nth-child(even){
+  background-color: rgb(204, 204, 204);
+} 
+.q_add_note{
+  margin-left: auto;
+  margin-right: 30px;
+  cursor: pointer;
+}
+
+.continue_btn{
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 40px;
 }
