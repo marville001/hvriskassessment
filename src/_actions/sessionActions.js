@@ -5,7 +5,7 @@ import {
 } from "./types";
 import Axios from "axios";
 
-const api = "http://localhost:5050";
+const api = process.env.REACT_APP_DB_URL;
 
 const createSession = (session) => async (dispatch) => {
   dispatch({ type: CREATE_SESSION_REQUEST });

@@ -6,7 +6,7 @@ import {
 } from "./types";
 import Axios from "axios";
 
-const api = "http://localhost:5050"
+const api = process.env.REACT_APP_DB_URL;
 
 const userLogin = (user) => async (dispatch) => {
   dispatch({ type: USER_SIGNIN_REQUEST, payload: user });
