@@ -6,12 +6,10 @@ import {
 } from "./types";
 import Axios from "axios";
 
-const api = process.env.REACT_APP_DB_URL;
-
 const userLogin = (user) => async (dispatch) => {
   dispatch({ type: USER_SIGNIN_REQUEST, payload: user });
   try {
-    const { data } = await Axios.post(`${api}/api/auth`, user);
+    const { data } = await Axios.post(`/api/auth`, user);
     localStorage.setItem("token", data.token);
     dispatch(loginUser(data.user));
   } catch (error) {
@@ -22,7 +20,7 @@ const userLogin = (user) => async (dispatch) => {
 const getProfileFetch = () => (dispatch) => {
   const token = localStorage.token;
   if (token) {
-    fetch(`${api}/api/users/me`, {
+    fetch(`/api/users/me`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -7,13 +7,10 @@ import {
 
 import Axios from "axios";
 
-const api = process.env.REACT_APP_DB_URL;
-
-
 const adminLogin = (admin) => async (dispatch) => {
   dispatch({ type: ADMIN_SIGNIN_REQUEST });
   try {
-    const { data } = await Axios.post(`${api}/api/admin/auth`, admin);
+    const { data } = await Axios.post("/api/admin/auth", admin);
     localStorage.setItem("adminToken", data.token);
 
     dispatch(loginAdmin(data.admin));
@@ -30,7 +27,7 @@ const getLogedInAdmin = () => async (dispatch) => {
   const adminToken = localStorage.getItem("adminToken");
   if (adminToken) {
     try {
-      const { data } = await Axios.get(`${api}/api/admin/me`, {
+      const { data } = await Axios.get("/api/admin/me", {
         headers: {
           "Content-Type": "application/json",
           "x-auth-token": adminToken,

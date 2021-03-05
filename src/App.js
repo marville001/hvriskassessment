@@ -3,7 +3,7 @@ import {useEffect} from 'react'
 import {Switch, Route} from 'react-router-dom'
 
 import { useDispatch } from "react-redux";
-
+// import {dotenv}  from 'dotenv' 
 import './App.css';
 import Home from './pages/Home';
 import Login from './pages/Login';

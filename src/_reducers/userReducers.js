@@ -12,7 +12,7 @@ const userReducer = (state = { user: {} }, action) => {
     case USER_SIGNIN_SUCCESS:
       return { ...state, loading: false, user: action.user, error: "" };
     case USER_SIGNIN_FAILED:
-      return { ...state, loading: false, error: action.error };
+      return { ...state, loading: false,user: {}, error: action.error };
     case LOGOUT_USER:
       return { ...state, user: {} };
     default:
