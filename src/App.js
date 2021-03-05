@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Session from './pages/Session';
 import { getProfileFetch } from './_actions/userActions';
+import NotFound from './pages/NotFound';
 
 function App(props) {
   const dispatch = useDispatch();
@@ -25,7 +26,8 @@ function App(props) {
       <Switch>
           <Route exact path="/" component={Home}/>
           <Route path="/login" component={Login}/>
-          <Route path="/session" component={Session}/>
+          <Route path="/session/:sessionid" component={Session}/>
+          <Route component={NotFound}/>
       </Switch>
     </div>
   );

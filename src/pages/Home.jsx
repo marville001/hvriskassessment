@@ -1,4 +1,5 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 import NavBar from "../components/Navbar";
 import {
   Button,
@@ -11,7 +12,8 @@ import {
   Row,
   Table,
 } from "react-bootstrap";
-
+import { useDispatch, useSelector } from "react-redux";
+import { createSession } from "../_actions";
 const CountCard = ({ name, count, countColor }) => {
   return (
     <Col xs={12} md={3} lg={3} className="my-3">
@@ -30,7 +32,29 @@ const CountCard = ({ name, count, countColor }) => {
   );
 };
 
-const Home = () => {
+const Home = (props) => {
+  const { user } = useSelector((state) => state.userReducer);
+  const { session, loading } = useSelector((state) => state.sessionReducer);
+  const dispatch = useDispatch();
+
+  const createSessionSubmit = () => {
+    const sessionObj = {
+      employeenumber: "343434343",
+      date: Date(),
+      state: "ongoing",
+      step: 0,
+    };
+    dispatch(createSession(sessionObj));
+
+    if (!loading) props.history.push(`/session/${session._id}`);
+  };
+
+  useEffect(() => {
+    if (!user._id) {
+      props.history.push("/login");
+    }
+  }, [user]);
+
   return (
     <>
       <NavBar />
@@ -38,11 +62,12 @@ const Home = () => {
         <div className="session-button-container">
           <Button
             className="session-button"
-            // style={{ width: "150px" }}
+            disabled={loading ? true : false}
             variant="primary"
             type="submit"
+            onClick={createSessionSubmit}
           >
-            Start Session
+            {loading ? "Loading...." : "Start Session"}
           </Button>
         </div>
         <Container>
@@ -50,11 +75,7 @@ const Home = () => {
             <CountCard name="All Sessions" count={30} countColor="crimson" />
             <CountCard name="Ongoing Sessions" count={1} countColor="green" />
             <CountCard name="Paused Sessions" count={2} countColor="yellow" />
-            <CountCard
-              name="Terminated Sessions"
-              count={4}
-              countColor="red"
-            />
+            <CountCard name="Terminated Sessions" count={4} countColor="red" />
           </Row>
         </Container>
         <Container>

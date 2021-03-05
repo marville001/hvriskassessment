@@ -23,7 +23,8 @@
 /* Home */
 .session-button-container{
   display: flex;
-  justify-content: flex-end;
+  align-items: flex-end;
+  flex-direction: column;
   padding: 30px 30px;
 }
 @media screen and (min-width: 500px){
@@ -125,3 +126,25 @@
   justify-content: flex-end;
   padding: 20px 40px;
 }
+
+.loading_modal_one{
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(1,1, 1, .5);
+  display: flex;
+  z-index: 222;display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  flex-direction: column;
+}
+
+
+/* 404 */
+
+.error-template {padding: 40px 15px;text-align: center;}
+.error-actions {margin-top:15px;margin-bottom:15px;}
+.error-actions .btn { margin-right:10px; }

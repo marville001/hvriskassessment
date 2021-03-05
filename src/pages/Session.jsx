@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import NavBar from "../components/Navbar";
 import SessionProgress from "../components/SessionProgress";
 
@@ -12,9 +13,17 @@ import {
   HVDamageAssessment,
 } from "../components";
 import { Card, Container } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
-const Session = () => {
+const Session = (props) => {
   const [activeStep, setActiveStep] = useState(0);
+  const { user } = useSelector((state) => state.userReducer);
+
+  useEffect(() => {
+    if (!user._id) {
+      props.history.push("/login");
+    }
+  }, [user]);
 
   return (
     <>
