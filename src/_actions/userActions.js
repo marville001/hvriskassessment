@@ -6,12 +6,12 @@ import {
 } from "./types";
 import Axios from "axios";
 
-
+const api ="https://hvriskassessment.herokuapp.com"
 
 const userLogin = (user) => async (dispatch) => {
   dispatch({ type: USER_SIGNIN_REQUEST, payload: user });
   try {
-    const { data } = await Axios.post("/api/auth", user);
+    const { data } = await Axios.post(api+"/api/auth", user);
     localStorage.setItem("token", data.token);
     dispatch(loginUser(data.user));
   } catch (error) {
@@ -23,7 +23,7 @@ const getProfileFetch = () => (dispatch) => {
   console.log("Variable"+process.env.REACT_APP_KEY);
   const token = localStorage.token;
   if (token) {
-    fetch("/api/users/me", {
+    fetch(api+"/api/users/me", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

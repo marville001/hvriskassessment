@@ -2,23 +2,30 @@
 import { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import "./App.css";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Session from "./pages/Session";
 import { getProfileFetch } from "./_actions/userActions";
 import NotFound from "./pages/NotFound";
-import { getCurrentSession } from "./_actions";
+import { getCurrentSession,loadAllSessions } from "./_actions";
 import AuthenticateLogin from "./pages/AuthenticateLogin";
 
 function App() {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
     dispatch(getProfileFetch());
     dispatch(getCurrentSession());
   }, []);
+
+  useEffect(() => {
+    if(user._id){
+      dispatch(loadAllSessions(user.idnumber));
+    }
+  }, [user]);
 
   return (
     <div className="App">

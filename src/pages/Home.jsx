@@ -34,14 +34,17 @@ const CountCard = ({ name, count, countColor }) => {
 };
 
 const Home = () => {
-  const { session, loading } = useSelector((state) => state.sessionReducer);
+  const { session, sessions, loading } = useSelector(
+    (state) => state.sessionReducer
+  );
+  const { user } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
   const [sessionMsg, setSessionMsg] = useState("");
 
   const createSessionSubmit = () => {
     const sessionObj = {
-      employeenumber: "343434343",
+      employeenumber: user.idnumber,
       date: Date(),
       state: "ongoing",
       step: 0,
@@ -82,14 +85,17 @@ const Home = () => {
               type="submit"
               onClick={createSessionSubmit}
             >
-              {loading ? (<>
-                <Spinner
-                  as="span"
-                  animation="grow"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                />Loading...</>
+              {loading ? (
+                <>
+                  <Spinner
+                    as="span"
+                    animation="grow"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                  Loading...
+                </>
               ) : (
                 "Start New Session"
               )}
@@ -99,10 +105,14 @@ const Home = () => {
         </div>
         <Container>
           <Row>
-            <CountCard name="All Sessions" count={30} countColor="crimson" />
+            <CountCard
+              name="All Sessions"
+              count={sessions.length}
+              countColor="crimson"
+            />
             <CountCard name="Ongoing Sessions" count={1} countColor="green" />
             <CountCard name="Paused Sessions" count={2} countColor="yellow" />
-            <CountCard name="Terminated Sessions" count={4} countColor="red" />
+            <CountCard name="Terminated Sessions" count={1} countColor="red" />
           </Row>
         </Container>
         <Container>
@@ -143,26 +153,19 @@ const Home = () => {
                   <tr>
                     <th>#</th>
                     <th>Session Id</th>
-                    <th>Date</th>
-                    <th>Time</th>
+                    <th colSpan={2}>Date/Time</th>
                     <th>State</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
+                  {sessions.map((session, index) => (
+                    <tr>
+                      <td>{index+1}</td>
+                      <td>{session._id}</td>
+                      <td colSpan={2}>{session.date}</td>
+                      <td>{session.state}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </Table>
             </Col>
