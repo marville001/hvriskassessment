@@ -24,11 +24,18 @@ const Session = (props) => {
   const [activeStep, setActiveStep] = useState(0);
   const [sessionState, setSessionState] = useState("ongoing");
   const { loading, error } = useSelector((state) => state.sessionReducer);
+  const { user } = useSelector((state) => state.userReducer);
 
   const sessionId = props.match.params.sessionid;
   useEffect(() => {
     dispatch(loadCurrentSession(sessionId));
   }, []);
+
+  useEffect(() => {
+    if (!user._id) {
+      window.location.href = "/login?continue=/session/" + sessionId;
+    }
+  }, [user]);
 
   return (
     <>
@@ -37,7 +44,9 @@ const Session = (props) => {
         <Container style={{ padding: "20px 10px" }} fluid>
           {loading ? (
             <Loading />
-          ) : error?(<Error error={error} />) :(
+          ) : error ? (
+            <Error error={error} />
+          ) : (
             sessionState === "ongoing" && (
               <Card>
                 <Card.Header className="bg-primary">

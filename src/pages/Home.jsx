@@ -33,8 +33,7 @@ const CountCard = ({ name, count, countColor }) => {
   );
 };
 
-const Home = (props) => {
-  const { user } = useSelector((state) => state.userReducer);
+const Home = () => {
   const { session, loading } = useSelector((state) => state.sessionReducer);
   const dispatch = useDispatch();
 
@@ -62,12 +61,6 @@ const Home = (props) => {
     }
   }, [session]);
 
-  useEffect(() => {
-    if (!user._id) {
-      props.history.push("/login");
-    }
-  }, [user]);
-
   return (
     <>
       <NavBar />
@@ -79,7 +72,7 @@ const Home = (props) => {
               href={`/session/${session._id}`}
               onClick={createSessionSubmit}
             >
-              {"Resume Session"}
+              {"Go to Session"}
             </Button>
           ) : (
             <Button

@@ -41,6 +41,7 @@ const loginUser = (user) => ({
   type: USER_SIGNIN_SUCCESS,
   user,
 });
+
 const logoutUser = () => (dispatch) => {
   localStorage.removeItem("token");
   localStorage.removeItem("sessionid");

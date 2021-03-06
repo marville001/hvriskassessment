@@ -17,9 +17,13 @@ const Login = (props) => {
     password,
   };
 
+  const redirect = props.location.search
+    ? props.location.search.split("=")[1]
+    : "/";
+
   useEffect(() => {
     if (user._id) {
-      props.history.push("/");
+      props.history.push(redirect);
     }
     return () => {};
   }, [user]);
