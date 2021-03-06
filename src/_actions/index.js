@@ -1,5 +1,5 @@
 export { userLogin, getProfileFetch, logoutUser } from "./userActions";
 
-export { createSession } from "./sessionActions";
+export { createSession,getCurrentSession, loadCurrentSession } from "./sessionActions";
 
 export { adminLogin, getLogedInAdmin, logoutAdmin } from "./adminActions";

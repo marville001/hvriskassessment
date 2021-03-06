@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Accordion, Card } from "react-bootstrap";
 
-const AgentIdentification = ({activeStep, setActiveStep}) => {
-  // const [anyHazard , setHazard] = useState(null)
+const AgentIdentification = ({ activeStep, setActiveStep }) => {
+  const [helpResponse, SetHelpResponse] = useState("");
   return (
     <div>
       <h5 className="text-center p-2">Agent Identification</h5>
@@ -16,13 +16,52 @@ const AgentIdentification = ({activeStep, setActiveStep}) => {
                 <span>?</span>
               </div>
               <div className="q_buttons">
-                <Button className="q_button">YES</Button>
+                <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                  <Button
+                    disabled={helpResponse === "yes" ? true: false}
+                    style={{
+                      backgroundColor:
+                        helpResponse === "yes" ? "#007bff" : "#fff",
+                      color: helpResponse !== "yes" ? "#007bff" : "#fff",
+                    }}
+                    className="q_button"
+                    onClick={()=>SetHelpResponse("yes")}
+                  >
+                    YES
+                  </Button>
+                </Accordion.Toggle>
                 <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                  <Button className="q_button">NO</Button>
+                  <Button
+                    disabled={helpResponse ==="no" ? true : false}
+                    style={{
+                      backgroundColor:
+                        helpResponse === "no" ? "#007bff" : "#fff",
+                      color: helpResponse !== "no" ? "#007bff" : "#fff",
+                    }}
+                    className="q_button"
+                    onClick={()=>SetHelpResponse("no")}
+                  >
+                    NO
+                  </Button>
                 </Accordion.Toggle>
               </div>
             </div>
           </Card.Header>
+          <Accordion.Collapse eventKey="1">
+            <Card.Body>
+              <p className="lead">
+                NB:{" "} <span className="ask">*</span>
+                <i>
+                Call 911 , isolate yourself 75’ from the vehicle and stay on the line
+                </i>
+              </p>
+              <div className="continue_btn">
+                <Button onClick={() => setActiveStep(activeStep + 1)}>
+                  Continue
+                </Button>
+              </div>
+            </Card.Body>
+          </Accordion.Collapse>
           <Accordion.Collapse eventKey="0">
             <Card.Body>
               <p className="lead">
@@ -37,10 +76,10 @@ const AgentIdentification = ({activeStep, setActiveStep}) => {
               </p>
               <h5>Disclaimer:</h5>
               <p>
-              <span className="ask">*</span>“I have to advise you of the potential risks associated with
-                ELECTRIC AND HYBRID-ELECTRIC VEHICLES. In the event of damage to
-                or fire involving an electric vehicle (EV) or hybrid-electric
-                vehicle (HEV):”
+                <span className="ask">*</span>“I have to advise you of the
+                potential risks associated with ELECTRIC AND HYBRID-ELECTRIC
+                VEHICLES. In the event of damage to or fire involving an
+                electric vehicle (EV) or hybrid-electric vehicle (HEV):”
               </p>
               <ol>
                 <li>
@@ -61,13 +100,15 @@ const AgentIdentification = ({activeStep, setActiveStep}) => {
                   and fire.
                 </li>
               </ol>
+              <div className="continue_btn">
+                <Button onClick={() => setActiveStep(activeStep + 1)}>
+                  Continue
+                </Button>
+              </div>
             </Card.Body>
           </Accordion.Collapse>
         </Card>
       </Accordion>
-      <div className="continue_btn">
-        <Button onClick={()=>setActiveStep(activeStep+1)} >Continue</Button>
-      </div>
     </div>
   );
 };

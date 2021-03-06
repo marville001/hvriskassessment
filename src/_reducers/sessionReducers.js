@@ -2,6 +2,9 @@ import {
   CREATE_SESSION_REQUEST,
   CREATE_SESSION_SUCCESS,
   CREATE_SESSION_FAILED,
+  CURRENT_SESSION_REQUEST,
+  CURRENT_SESSION_SUCCESS,
+  CURRENT_SESSION_FAILED,
 } from "../_actions/types";
 
 const sessionReducer = (state = { session: {} }, action) => {
@@ -12,6 +15,14 @@ const sessionReducer = (state = { session: {} }, action) => {
       return { ...state, loading: false, session: action.session, error: "" };
     case CREATE_SESSION_FAILED:
       return { ...state, loading: false, error: action.error };
+
+    case CURRENT_SESSION_REQUEST:
+      return { ...state, loading: true };
+    case CURRENT_SESSION_SUCCESS:
+      return { ...state, loading: false, session: action.session, error: "" };
+    case CURRENT_SESSION_FAILED:
+      return { ...state, loading: false, error: action.error };
+      
     default:
       return state;
   }

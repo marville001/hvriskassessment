@@ -59,8 +59,14 @@
   font-size: 13px;
   color: green;
 }
-@media screen and (max-width: 1200px){
-  
+@media screen and (max-width: 700px){
+  .session_progress_item .text{
+    display: none;
+  }
+  .session_progress_item .num{
+    width: 30px;
+    height: 30px;
+  }
 }
 .ask{
   color: red;
@@ -106,7 +112,10 @@
 .q_container .q_buttons .q_button{
   margin: 0px 10px;
   padding: 10px 30px;
+  background-color: #fff;
+  color: #007bff;
 }
+
 .item_container{
   display: flex;
   flex-direction: column;
@@ -141,7 +150,6 @@
   color: #fff;
   flex-direction: column;
 }
-
 
 /* 404 */
 

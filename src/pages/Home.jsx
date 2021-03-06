@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "../components/Navbar";
 import {
   Button,
@@ -10,6 +10,7 @@ import {
   FormControl,
   InputGroup,
   Row,
+  Spinner,
   Table,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -37,6 +38,8 @@ const Home = (props) => {
   const { session, loading } = useSelector((state) => state.sessionReducer);
   const dispatch = useDispatch();
 
+  const [sessionMsg, setSessionMsg] = useState("");
+
   const createSessionSubmit = () => {
     const sessionObj = {
       employeenumber: "343434343",
@@ -45,9 +48,19 @@ const Home = (props) => {
       step: 0,
     };
     dispatch(createSession(sessionObj));
-
-    if (!loading) props.history.push(`/session/${session._id}`);
   };
+
+  useEffect(() => {
+    if (session._id) {
+      if (session.state === "ongoing") {
+        setSessionMsg("You currently have an ongoing session");
+      } else if (session.state === "paused") {
+        setSessionMsg("You have a temporarily paused session");
+      } else {
+        setSessionMsg("");
+      }
+    }
+  }, [session]);
 
   useEffect(() => {
     if (!user._id) {
@@ -60,15 +73,36 @@ const Home = (props) => {
       <NavBar />
       <div style={{ marginTop: "10vh" }}>
         <div className="session-button-container">
-          <Button
-            className="session-button"
-            disabled={loading ? true : false}
-            variant="primary"
-            type="submit"
-            onClick={createSessionSubmit}
-          >
-            {loading ? "Loading...." : "Start Session"}
-          </Button>
+          {session._id && session.state === "ongoing" ? (
+            <Button
+              className="session-button"
+              href={`/session/${session._id}`}
+              onClick={createSessionSubmit}
+            >
+              {"Resume Session"}
+            </Button>
+          ) : (
+            <Button
+              className="session-button"
+              disabled={loading ? true : false}
+              variant="primary"
+              type="submit"
+              onClick={createSessionSubmit}
+            >
+              {loading ? (<>
+                <Spinner
+                  as="span"
+                  animation="grow"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />Loading...</>
+              ) : (
+                "Start New Session"
+              )}
+            </Button>
+          )}
+          {sessionMsg && <p>{sessionMsg}</p>}
         </div>
         <Container>
           <Row>
