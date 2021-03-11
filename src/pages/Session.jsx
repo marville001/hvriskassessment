@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import NavBar from "../components/Navbar";
-import SessionProgress from "../components/SessionProgress";
+import Wrapper from "../components/Wrapper";
 
 import {
   AgentIdentification,
@@ -12,7 +11,7 @@ import {
   VehicleDamageAssessment,
   HVDamageAssessment,
 } from "../components";
-import { Card, Container } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import PausedSession from "../components/Session/PausedSession";
 import { updateSessionState , getCurrentSession} from "../_actions";
@@ -55,9 +54,11 @@ const Session = (props) => {
       window.location.href = "/login?continue=/session/" + sessionId;
     }
   }, [user]);
+
   useEffect(() => {
     dispatch(getCurrentSession(props.match.params.sessionid));
   }, []);
+
   useEffect(() => {
     setActiveStep(session.step);
     setSessionState(session.state);
@@ -68,24 +69,21 @@ const Session = (props) => {
   };
 
   return (
-    <>
-      <NavBar />
-      <div style={{ marginTop: "10vh" }}>
-        <Container style={{ padding: "20px 10px" }} fluid>
+      <Wrapper>
           {loading ? (
             <Loading />
           ) : error ? (
             <Error error={error} />
           ) : (
             sessionState === "ongoing" && (
-              <Card>
-                <Card.Header className="bg-primary">
-                  <h4 className="text-white text-center">
+              <Card style={{margin: "-18px", border:"0px", borderRadius:"0px"}}>
+                <Card.Header className="bg-white">
+                  <h4 className="text-dark">
                     HV Risk Assessment -{" "}
                   </h4>
                 </Card.Header>
                 <Card.Body>
-                  <SessionProgress activeStep={activeStep} />
+                  {/* <SessionProgress activeStep={activeStep} /> */}
                   {activeStep === 0 ? (
                     <AgentIdentification
                       activeStep={activeStep}
@@ -163,9 +161,7 @@ const Session = (props) => {
             )
           )}
           {sessionState === "paused" && <PausedSession />}
-        </Container>
-      </div>
-    </>
+        </Wrapper>
   );
 };
 

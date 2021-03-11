@@ -7,6 +7,7 @@ import "./App.css";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Session from "./pages/Session";
+import Sessions from "./pages/Sessions";
 import { getProfileFetch } from "./_actions/userActions";
 import NotFound from "./pages/NotFound";
 import { loadAllSessions } from "./_actions";
@@ -15,7 +16,6 @@ import AuthenticateLogin from "./pages/AuthenticateLogin";
 function App() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.userReducer);
-
   useEffect(() => {
     dispatch(getProfileFetch());
     
@@ -36,6 +36,7 @@ function App() {
           </AuthenticateLogin>
         </Route>
         <Route path="/login" component={Login} />
+        <Route path="/sessions" component={Sessions} />
         <Route path="/session/:sessionid" component={Session} />
         <Route component={NotFound} />
       </Switch>
