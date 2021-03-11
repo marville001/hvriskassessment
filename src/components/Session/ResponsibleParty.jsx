@@ -46,7 +46,7 @@ const ResponsibleParty = (props) => {
       <h5 className="text-center p-2">Responsible Party Information</h5>
       <Row style={{ display: "flex", justifyContent: "center" }}>
         <Col md={12} lg={8}>
-          <Form autoComplete={false}>
+          <Form autoComplete={false} onSubmit={formSubmit}>
             {rpartyererror && (
               <p className="text-center text-danger">{rpartyererror}</p>
             )}
@@ -122,7 +122,6 @@ const ResponsibleParty = (props) => {
                   <Button
                     className="btn-block"
                     // style={{ width: "150px" }}
-                    onClick={formSubmit}
                     variant="primary"
                     type="submit"
                   >
