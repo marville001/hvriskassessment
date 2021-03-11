@@ -1,10 +1,49 @@
 import React from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { addCallerDetails } from "../../_actions";
 
-const CallerIdentification = ({ activeStep, setActiveStep }) => {
+const CallerIdentification = (props) => {
+  const {
+    activeStep,
+    setName,
+    setNumber,
+    setEmail,
+    setSupervisor,
+    setOAddress,
+    setONumber,
+    setLocation,
+    setOrganization,
+    number,
+    name,
+    email,
+    sup,
+    oa,
+    on,
+    loc,
+    org,
+    changeSessionState,
+  } = props;
+  const dispatch = useDispatch();
+  const { callererror } = useSelector((state) => state.sessionReducer);
+
   const formSubmit = (e) => {
     e.preventDefault();
-    setActiveStep(activeStep + 1);
+
+    const caller = {
+      name,
+      number,
+      email,
+      supervisor: sup,
+      organization_address: oa,
+      organization_number: on,
+      location: loc,
+      organization: org,
+    };
+
+    dispatch(addCallerDetails(caller));
+
+    changeSessionState(activeStep + 1, "ongoing");
   };
   return (
     <Container>
@@ -12,53 +51,98 @@ const CallerIdentification = ({ activeStep, setActiveStep }) => {
       <Row style={{ display: "flex", justifyContent: "center" }}>
         <Col md={12} lg={8}>
           <Form autoComplete={false}>
+            {callererror && (
+              <p className="text-center text-danger">{callererror}</p>
+            )}
             <Row>
               <Col xs={12} md={6} lg={6}>
                 <Form.Group controlId="exampleForm.ControlInput1">
                   <Form.Label>Name</Form.Label>
-                  <Form.Control type="text" placeholder="" />
-                </Form.Group>
-              </Col>
-              <Col xs={12} md={6} lg={6}>
-                <Form.Group>
-                  <Form.Label>Personal Contact Number</Form.Label>
-                  <Form.Control type="text" placeholder="" />
+                  <Form.Control
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    type="text"
+                    required={true}
+                    placeholder=""
+                  />
                 </Form.Group>
               </Col>
               <Col xs={12} md={6} lg={6}>
                 <Form.Group>
                   <Form.Label>Email</Form.Label>
-                  <Form.Control type="text" placeholder="" />
+                  <Form.Control
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    type="text"
+                    placeholder=""
+                  />
                 </Form.Group>
               </Col>
               <Col xs={12} md={6} lg={6}>
                 <Form.Group>
+                  <Form.Label>Personal Contact Number</Form.Label>
+                  <Form.Control
+                    value={number}
+                    onChange={(e) => setNumber(e.target.value)}
+                    type="text"
+                    placeholder=""
+                  />
+                </Form.Group>
+              </Col>
+
+              <Col xs={12} md={6} lg={6}>
+                <Form.Group>
                   <Form.Label>Current Location</Form.Label>
-                  <Form.Control type="text" placeholder="" />
+                  <Form.Control
+                    value={loc}
+                    onChange={(e) => setLocation(e.target.value)}
+                    type="text"
+                    placeholder=""
+                  />
                 </Form.Group>
               </Col>
               <Col xs={12} md={6} lg={6}>
                 <Form.Group>
                   <Form.Label>Organization</Form.Label>
-                  <Form.Control type="text" placeholder="" />
+                  <Form.Control
+                    value={org}
+                    onChange={(e) => setOrganization(e.target.value)}
+                    type="text"
+                    placeholder=""
+                  />
                 </Form.Group>
               </Col>
               <Col xs={12} md={6} lg={6}>
                 <Form.Group>
                   <Form.Label>Organization Address</Form.Label>
-                  <Form.Control type="text" placeholder="" />
+                  <Form.Control
+                    value={oa}
+                    onChange={(e) => setOAddress(e.target.value)}
+                    type="text"
+                    placeholder=""
+                  />
                 </Form.Group>
               </Col>
               <Col xs={12} md={6} lg={6}>
                 <Form.Group>
                   <Form.Label>Organization Phone Number</Form.Label>
-                  <Form.Control type="text" placeholder="" />
+                  <Form.Control
+                    value={on}
+                    onChange={(e) => setONumber(e.target.value)}
+                    type="text"
+                    placeholder=""
+                  />
                 </Form.Group>
               </Col>
               <Col xs={12} md={6} lg={6}>
                 <Form.Group>
                   <Form.Label>Supervisor</Form.Label>
-                  <Form.Control type="text" placeholder="" />
+                  <Form.Control
+                    value={sup}
+                    onChange={(e) => setSupervisor(e.target.value)}
+                    type="text"
+                    placeholder=""
+                  />
                 </Form.Group>
               </Col>
               <Col xs={12} md={6} lg={6}>

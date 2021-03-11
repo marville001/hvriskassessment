@@ -9,7 +9,7 @@ import Login from "./pages/Login";
 import Session from "./pages/Session";
 import { getProfileFetch } from "./_actions/userActions";
 import NotFound from "./pages/NotFound";
-import { getCurrentSession,loadAllSessions } from "./_actions";
+import { loadAllSessions } from "./_actions";
 import AuthenticateLogin from "./pages/AuthenticateLogin";
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getProfileFetch());
-    dispatch(getCurrentSession());
+    
   }, []);
 
   useEffect(() => {

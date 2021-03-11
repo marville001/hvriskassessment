@@ -6,8 +6,13 @@ import {
 } from "./types";
 import Axios from "axios";
 
+// Online db
 const api ="https://hvriskassessment.herokuapp.com"
 
+// offline db
+// const api ="http://localhost:5005"
+
+// 
 const userLogin = (user) => async (dispatch) => {
   dispatch({ type: USER_SIGNIN_REQUEST, payload: user });
   try {
@@ -17,10 +22,10 @@ const userLogin = (user) => async (dispatch) => {
   } catch (error) {
     dispatch({ type: USER_SIGNIN_FAILED, error: error.response.data.message });
   }
+
 };
 
 const getProfileFetch = () => (dispatch) => {
-  console.log("Variable"+process.env.REACT_APP_KEY);
   const token = localStorage.token;
   if (token) {
     fetch(api+"/api/users/me", {

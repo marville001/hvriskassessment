@@ -1,8 +1,25 @@
 import React, { useState } from "react";
 import { Button, Accordion, Card } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
-const AgentIdentification = ({ activeStep, setActiveStep }) => {
-  const [helpResponse, SetHelpResponse] = useState("");
+const AgentIdentification = ({
+  activeStep,
+  setActiveStep,
+  changeSessionState,
+}) => {
+  const { user } = useSelector((state) => state.userReducer);
+  const [helpResponse, SetHelpResponse] = useState("");  
+
+  const continueClick = () => {
+    let state = "";
+    if (helpResponse === "yes") {
+      state = "paused";
+    } else {
+      state = "ongoing";
+    }
+    changeSessionState(activeStep + 1, state);
+  };
+
   return (
     <div>
       <h5 className="text-center p-2">Agent Identification</h5>
@@ -11,35 +28,35 @@ const AgentIdentification = ({ activeStep, setActiveStep }) => {
           <Card.Header>
             <div className="q_container">
               <div className="q_text">
-                <div className="ask">*</div>This is Agent “X”, Are there
-                currently any immediate hazard to life or property{" "}
+                <div className="ask">*</div>This is Agent “{user.name}”, Are
+                there currently any immediate hazard to life or property{" "}
                 <span>?</span>
               </div>
               <div className="q_buttons">
                 <Accordion.Toggle as={Button} variant="link" eventKey="1">
                   <Button
-                    disabled={helpResponse === "yes" ? true: false}
+                    disabled={helpResponse === "yes" ? true : false}
                     style={{
                       backgroundColor:
                         helpResponse === "yes" ? "#007bff" : "#fff",
                       color: helpResponse !== "yes" ? "#007bff" : "#fff",
                     }}
                     className="q_button"
-                    onClick={()=>SetHelpResponse("yes")}
+                    onClick={() => SetHelpResponse("yes")}
                   >
                     YES
                   </Button>
                 </Accordion.Toggle>
                 <Accordion.Toggle as={Button} variant="link" eventKey="0">
                   <Button
-                    disabled={helpResponse ==="no" ? true : false}
+                    disabled={helpResponse === "no" ? true : false}
                     style={{
                       backgroundColor:
                         helpResponse === "no" ? "#007bff" : "#fff",
                       color: helpResponse !== "no" ? "#007bff" : "#fff",
                     }}
                     className="q_button"
-                    onClick={()=>SetHelpResponse("no")}
+                    onClick={() => SetHelpResponse("no")}
                   >
                     NO
                   </Button>
@@ -50,15 +67,14 @@ const AgentIdentification = ({ activeStep, setActiveStep }) => {
           <Accordion.Collapse eventKey="1">
             <Card.Body>
               <p className="lead">
-                NB:{" "} <span className="ask">*</span>
+                NB: <span className="ask">*</span>
                 <i>
-                Call 911 , isolate yourself 75’ from the vehicle and stay on the line
+                  Call 911 , isolate yourself 75’ from the vehicle and stay on
+                  the line
                 </i>
               </p>
               <div className="continue_btn">
-                <Button onClick={() => setActiveStep(activeStep + 1)}>
-                  Continue
-                </Button>
+                <Button onClick={continueClick}>Continue</Button>
               </div>
             </Card.Body>
           </Accordion.Collapse>
@@ -101,9 +117,7 @@ const AgentIdentification = ({ activeStep, setActiveStep }) => {
                 </li>
               </ol>
               <div className="continue_btn">
-                <Button onClick={() => setActiveStep(activeStep + 1)}>
-                  Continue
-                </Button>
+                <Button onClick={continueClick}>Continue</Button>
               </div>
             </Card.Body>
           </Accordion.Collapse>

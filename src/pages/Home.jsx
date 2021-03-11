@@ -34,7 +34,7 @@ const CountCard = ({ name, count, countColor }) => {
 };
 
 const Home = () => {
-  const { session, sessions, loading } = useSelector(
+  const { session, sessions, loading, error } = useSelector(
     (state) => state.sessionReducer
   );
   const { user } = useSelector((state) => state.userReducer);
@@ -102,6 +102,7 @@ const Home = () => {
             </Button>
           )}
           {sessionMsg && <p>{sessionMsg}</p>}
+          {error && <p className="text-danger">{error}</p>}
         </div>
         <Container>
           <Row>
@@ -155,15 +156,26 @@ const Home = () => {
                     <th>Session Id</th>
                     <th colSpan={2}>Date/Time</th>
                     <th>State</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   {sessions.map((session, index) => (
                     <tr>
-                      <td>{index+1}</td>
+                      <td>{index + 1}</td>
                       <td>{session._id}</td>
                       <td colSpan={2}>{session.date}</td>
                       <td>{session.state}</td>
+                      {session.state === "ongoing" && (
+                        <td>
+                          <Button href={"/session/"+session._id}>Continue</Button>
+                        </td>
+                      )}
+                      {session.state === "paused" &&(
+                        <td>
+                          <Button href={"/session/"+session._id}>Resume</Button>
+                        </td>
+                      )}
                     </tr>
                   ))}
                 </tbody>

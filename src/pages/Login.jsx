@@ -41,9 +41,9 @@ const Login = (props) => {
       <Row className="form_container">
         <Col className="form_wrapper" sm={12} md={6} xl={4}>
           <h5 className="text-center p-3">Welcome Back. Please Login</h5>
-          {loading && <div >Loading...</div>}
+          {loading && <div className="text-center" >Loading...</div>}
           {/* {error && <div className={styles.errorContainer}>{error}</div>} */}
-          {error && <div>{error}</div>}
+          {error && <div className="text-center text-danger">{error}</div>}
           <Form>
             <Form.Group controlId="exampleForm.ControlInput1">
               <Form.Label>
