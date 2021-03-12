@@ -37,7 +37,7 @@ const Login = (props) => {
   };
 
   return (
-    <Container>
+    <Container style={{backgroundColor:"#fff",position:"absolute",top:"0",bottom:"0"}} fluid>
       <Row className="form_container">
         <Col className="form_wrapper" sm={12} md={6} xl={4}>
           <h5 className="text-center p-3">Welcome Back. Please Login</h5>

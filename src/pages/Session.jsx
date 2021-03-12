@@ -82,7 +82,7 @@ const Session = (props) => {
             <Loading />
           ) : error ? (
             <Error error={error} />
-          ) : (
+          ) : !session._id? <h4 className="text-center">No Session Found with given id</h4> : (
             sessionState === "ongoing" && (
               <Card style={{margin: "-18px", border:"0px", borderRadius:"0px"}}>
                 <Card.Header className="bg-white">
