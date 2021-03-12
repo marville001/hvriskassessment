@@ -3,8 +3,8 @@ import { Button } from "react-bootstrap";
 
 const QuestionContainer = ({ num, question, actionYes
  }) => {
-  const [anyNote, setHaveNote] = useState(false);
-  const [note, setNote] = useState("");
+  // const [anyNote, setHaveNote] = useState(false);
+  // const [note, setNote] = useState("");
   const [choice, setChoice] = useState(false);
 
   return (
