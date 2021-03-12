@@ -21,13 +21,11 @@ const CallerIdentification = (props) => {
     oa,
     on,
     loc,
-    org,
-    changeSessionState,
+    org,sessionId,
+    changeSessionState
   } = props;
   const dispatch = useDispatch();
   const { callererror } = useSelector((state) => state.sessionReducer);
-  
-  const sessionId = props.match.params.sessionid;
   const formSubmit = (e) => {
     e.preventDefault();
 

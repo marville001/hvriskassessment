@@ -17,6 +17,9 @@ import {
   RPARTY_ADD_REQUEST,
   RPARTY_ADD_SUCCESS,
   RPARTY_ADD_FAILED,
+  VEHICLE_ADD_REQUEST,
+  VEHICLE_ADD_SUCCESS,
+  VEHICLE_ADD_FAILED,
 } from "./types";
 import Axios from "axios";
 
@@ -85,6 +88,28 @@ const addRPartyDetails = (rparty) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: RPARTY_ADD_FAILED,
+      error: error.response.data.message,
+    });
+  }
+};
+
+const addVehicleDetails = (vehicle) => async (dispatch) => {
+  dispatch({ type: VEHICLE_ADD_REQUEST });
+  try {
+    const token = localStorage.getItem("token");
+
+    const { data } = await Axios.post(
+      `${api}/api/session/vehicle-details`,
+      vehicle,
+      {
+        headers: { "x-auth-token": token },
+      }
+    );
+
+    dispatch({ type: VEHICLE_ADD_SUCCESS, vehicle: data.vehicle });
+  } catch (error) {
+    dispatch({
+      type: VEHICLE_ADD_FAILED,
       error: error.response.data.message,
     });
   }
@@ -167,5 +192,5 @@ export {
   getCurrentSession,
   loadAllSessions,
   updateSessionState,
-  addCallerDetails,addRPartyDetails
+  addCallerDetails,addRPartyDetails,addVehicleDetails
 };

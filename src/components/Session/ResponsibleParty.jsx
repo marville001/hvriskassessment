@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,9 +21,11 @@ const ResponsibleParty = (props) => {
     setRPAddress,
     setIProvider,
     changeSessionState,
+    sessionId,
   } = props;
 
-  const sessionId = props.match.params.sessionid;
+  const [inputError, setInputError] = useState("");
+
   const formSubmit = (e) => {
     e.preventDefault();
 
@@ -37,9 +39,20 @@ const ResponsibleParty = (props) => {
       insuranceprovider: insprovider,
     };
 
-    dispatch(addRPartyDetails(rparty));
+    if (
+      rpname === "" ||
+      rpnumber === "" ||
+      policy === "" ||
+      rpaddress === "" ||
+      cNumber === "" ||
+      insprovider === ""
+    ) {
+      setInputError("All fields are required");
+    } else {
+      dispatch(addRPartyDetails(rparty));
 
-    changeSessionState(activeStep + 1, "ongoing");
+      changeSessionState(activeStep + 1, "ongoing");
+    }
   };
   return (
     <Container fluid>
@@ -47,6 +60,9 @@ const ResponsibleParty = (props) => {
       <Row style={{ display: "flex", justifyContent: "center" }}>
         <Col md={12} lg={8}>
           <Form autoComplete={false} onSubmit={formSubmit}>
+            {inputError && (
+              <p className="text-center text-danger">{inputError}</p>
+            )}
             {rpartyererror && (
               <p className="text-center text-danger">{rpartyererror}</p>
             )}

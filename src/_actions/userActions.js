@@ -20,6 +20,7 @@ const userLogin = (user) => async (dispatch) => {
     localStorage.setItem("token", data.token);
     dispatch(loginUser(data.user));
   } catch (error) {
+    localStorage.removeItem("token");
     dispatch({ type: USER_SIGNIN_FAILED, error: error.response.data.message });
   }
 

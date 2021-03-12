@@ -7,6 +7,7 @@ export {
   updateSessionState,
   addCallerDetails,
   addRPartyDetails,
+  addVehicleDetails,
 } from "./sessionActions";
 
 export { adminLogin, getLogedInAdmin, logoutAdmin } from "./adminActions";

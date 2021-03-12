@@ -17,6 +17,9 @@ import {
   RPARTY_ADD_REQUEST,
   RPARTY_ADD_SUCCESS,
   RPARTY_ADD_FAILED,
+  VEHICLE_ADD_REQUEST,
+  VEHICLE_ADD_SUCCESS,
+  VEHICLE_ADD_FAILED,
 } from "../_actions/types";
 
 const sessionReducer = (state = { session: {}, sessions: [] }, action) => {
@@ -65,6 +68,18 @@ const sessionReducer = (state = { session: {}, sessions: [] }, action) => {
       };
     case RPARTY_ADD_FAILED:
       return { ...state, loading: false, rpartyerror: action.error };
+
+    case VEHICLE_ADD_REQUEST:
+      return { ...state, loading: true };
+    case VEHICLE_ADD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        vehicle: action.vehicle,
+        vehicleerror: "",
+      };
+    case VEHICLE_ADD_FAILED:
+      return { ...state, loading: false, vehicleerror: action.error };
 
     case ALL_SESSION_REQUEST:
       return { ...state, loading_all: true };

@@ -47,6 +47,14 @@ const Session = (props) => {
   const [rpaddress, setRPAddress] = useState("");
   const [insprovider, setIProvider] = useState("");
 
+  // Vehicle Details
+  const [make, setMake] = useState("");
+  const [model, setModel] = useState("");
+  const [year, setYear] = useState("");
+  const [vin, setVin] = useState("");
+  const [lpstate, setLPState] = useState("");
+  const [licence, setLicence] = useState("");
+
   const sessionId = props.match.params.sessionid;
 
   useEffect(() => {
@@ -111,6 +119,7 @@ const Session = (props) => {
                       loc={location}
                       org={organization}
                       changeSessionState={changeSessionState}
+                      sessionId={sessionId}
                     />
                   ) : null}
                   {activeStep === 2 ? (
@@ -130,12 +139,26 @@ const Session = (props) => {
                       setRPAddress={setRPAddress}
                       setIProvider={setIProvider}
                       changeSessionState={changeSessionState}
+                      sessionId={sessionId}
                     />
                   ) : null}
                   {activeStep === 3 ? (
                     <VehicleIdentification
                       activeStep={activeStep}
-                      setActiveStep={setActiveStep}
+                      changeSessionState={changeSessionState}
+                      sessionId={sessionId}
+                      make={make}
+                      model={model}
+                      year={year}
+                      vin={vin}
+                      lpstate={lpstate}
+                      licence={licence}
+                      setMake={setMake}
+                      setModel={setModel}
+                      setYear={setYear}
+                      setVin={setVin}
+                      setLPState={setLPState}
+                      setLicence={setLicence}
                     />
                   ) : null}
                   {activeStep === 4 ? (

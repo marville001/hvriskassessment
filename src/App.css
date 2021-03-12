@@ -89,7 +89,7 @@
 }
 .q_container .q_num{
   background-color: #fff;
-  padding: 5px 15px;
+  padding: 5px 8px;
   font-size: 25px;
   border: 1px solid rgba(0, 0, 0,.7);
   border-radius: 5px;
@@ -97,7 +97,7 @@
 }
 .q_container .q_text{
   margin: 0px 15px;
-  font-size: 20px;
+  font-size: 18px;
 }
 .q_container .q_text span{
   background-color: #7e7e7e;
@@ -122,7 +122,7 @@
   margin: 0px -15px;
 }
 .item_container:nth-child(even){
-  background-color: rgb(204, 204, 204);
+  background-color: var(--secondaryColor);
 } 
 .q_add_note{
   margin-left: auto;
