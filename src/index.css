@@ -30,3 +30,8 @@ body {
   margin-right: 0;
   margin-left: 0;
 }
+
+.d-flex-center{
+  display: flex;
+  justify-content: center;
+}

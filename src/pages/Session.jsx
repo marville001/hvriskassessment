@@ -165,6 +165,7 @@ const Session = (props) => {
                     <HazardAssessment
                       activeStep={activeStep}
                       setActiveStep={setActiveStep}
+                      sessionId={sessionId}
                     />
                   ) : null}
                   {activeStep === 5 ? (

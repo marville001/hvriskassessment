@@ -10,4 +10,14 @@ export {
   addVehicleDetails,
 } from "./sessionActions";
 
+export {
+  getHazard,
+  changeOnfire,
+  changeSmoking,
+  changeSmell,
+  changeSound,
+  changeElectricShutdown,
+  changeShutdown,
+} from "./hazardActions";
+
 export { adminLogin, getLogedInAdmin, logoutAdmin } from "./adminActions";
