@@ -12,6 +12,7 @@ import { getProfileFetch } from "./_actions/userActions";
 import NotFound from "./pages/NotFound";
 import { loadAllSessions } from "./_actions";
 import AuthenticateLogin from "./pages/AuthenticateLogin";
+import FinalSessionStep from "./pages/FinalSessionStep";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/sessions" component={Sessions} />
         <Route path="/session/:sessionid" component={Session} />
+        <Route path="/sessionend" component={FinalSessionStep} />
         <Route component={NotFound} />
       </Switch>
     </div>

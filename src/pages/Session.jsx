@@ -17,6 +17,7 @@ import PausedSession from "../components/Session/PausedSession";
 import { updateSessionState , getCurrentSession} from "../_actions";
 import Loading from "../components/Session/Loading";
 import Error from "../components/Session/Error";
+import EndedSession from "../components/Session/EndedSession";
 
 const Session = (props) => {
   const dispatch = useDispatch();
@@ -190,6 +191,7 @@ const Session = (props) => {
             )
           )}
           {sessionState === "paused" && <PausedSession />}
+          {sessionState === "ended" && <EndedSession />}
         </Wrapper>
   );
 };

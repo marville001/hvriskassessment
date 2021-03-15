@@ -12,7 +12,7 @@ import {
   changeAnySmoke,
   changeBCompDamaged,
   changeBatterySeparated,
-  // changeElectricalDamage,
+  changeElectricalDamage,
   changeCableDamage,
 } from "../../_actions";
 
@@ -24,6 +24,11 @@ const HVDamageAssessment = ({
 }) => {
   const { hvdamage } = useSelector((state) => state.hvDamageReducer);
   const dispatch = useDispatch();
+
+  const endSession = () => {
+    changeSessionState(activeStep + 1, "ended")
+    window.location.href = "/sessionend?sessionid=" + sessionId;
+  };
 
   useEffect(() => {
     dispatch(getHVdamage(sessionId));
@@ -103,10 +108,10 @@ const HVDamageAssessment = ({
             question={
               " Are there any indications of arcing or electrical damage"
             }
-            action={changeCableDamage}
+            action={changeElectricalDamage}
             _id={hvdamage._id}
-            what={hvdamage.cabledamage}
-            state={"cabledamage"}
+            what={hvdamage.electricaldamage}
+            state={"electricaldamage"}
           />
 
           <div className="item_container">
@@ -117,10 +122,24 @@ const HVDamageAssessment = ({
                 from source to source
               </div>
               <div className="q_buttons">
-                <Button className="q_button" onClick={() => {}}>
+                <Button
+                disabled={hvdamage.cabledamage === null ? false : hvdamage.cabledamage ? true : false}
+                style={{
+                  backgroundColor:
+                    hvdamage.cabledamage === null ? false : hvdamage.cabledamage ? "#007bff" : "#fff",
+                  color: hvdamage.cabledamage === null ? false : hvdamage.cabledamage ? "#fff" : "#007bff",
+                }}
+                className="q_button" onClick={() => dispatch(changeCableDamage({ id: hvdamage._id, state: true }))}>
                   YES
                 </Button>
-                <Button className="q_button" onClick={() => {}}>
+                <Button 
+                disabled={hvdamage.cabledamage === null ? false : !hvdamage.cabledamage ? true : false}
+                style={{
+                  backgroundColor:
+                    hvdamage.cabledamage === null ? false : !hvdamage.cabledamage ? "#007bff" : "#fff",
+                  color: hvdamage.cabledamage === null ? false : !hvdamage.cabledamage ? "#fff" : "#007bff",
+                }}
+                className="q_button" onClick={() => dispatch(changeCableDamage({ id: hvdamage._id, state: false }))}>
                   NO
                 </Button>
               </div>
@@ -128,7 +147,7 @@ const HVDamageAssessment = ({
           </div>
 
           <div className="d-flex-center py-5">
-            <Button onClick={() => {}} variant="success">
+            <Button onClick={endSession} variant="success">
               Finish Session
             </Button>
           </div>

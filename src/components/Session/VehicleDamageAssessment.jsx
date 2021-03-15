@@ -145,7 +145,7 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                       <Button
                         className="q_button"
                         disabled={
-                          airbagdeploys === undefined
+                          airbagdeploys === null
                             ? false
                             : airbagdeploys
                             ? true
@@ -153,13 +153,13 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                         }
                         style={{
                           backgroundColor:
-                            airbagdeploys === undefined
+                            airbagdeploys === null
                               ? false
                               : airbagdeploys
                               ? "#007bff"
                               : "#fff",
                           color:
-                            airbagdeploys === undefined
+                            airbagdeploys === null
                               ? false
                               : airbagdeploys
                               ? "#fff"
@@ -181,7 +181,7 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                       <Button
                         className="q_button"
                         disabled={
-                          airbagdeploys === undefined
+                          airbagdeploys === null
                             ? false
                             : !airbagdeploys
                             ? true
@@ -189,13 +189,13 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                         }
                         style={{
                           backgroundColor:
-                            airbagdeploys === undefined
+                            airbagdeploys === null
                               ? false
                               : !airbagdeploys
                               ? "#007bff"
                               : "#fff",
                           color:
-                            airbagdeploys === undefined
+                            airbagdeploys === null
                               ? false
                               : !airbagdeploys
                               ? "#fff"
@@ -211,7 +211,7 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                           dispatch(
                             changeWhichAirBag({
                               id: _id,
-                              state: undefined,
+                              state: null,
                             })
                           );
                         }}
@@ -269,7 +269,7 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                     <Accordion.Toggle as={Button} variant="link" eventKey="1">
                       <Button
                         disabled={
-                          submerged === undefined
+                          submerged === null
                             ? false
                             : submerged
                             ? true
@@ -277,13 +277,13 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                         }
                         style={{
                           backgroundColor:
-                            submerged === undefined
+                            submerged === null
                               ? false
                               : submerged
                               ? "#007bff"
                               : "#fff",
                           color:
-                            submerged === undefined
+                            submerged === null
                               ? false
                               : submerged
                               ? "#fff"
@@ -305,7 +305,7 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                     <Accordion.Toggle as={Button} variant="link" eventKey="0">
                       <Button
                         disabled={
-                          submerged === undefined
+                          submerged === null
                             ? false
                             : !submerged
                             ? true
@@ -313,13 +313,13 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                         }
                         style={{
                           backgroundColor:
-                            submerged === undefined
+                            submerged === null
                               ? false
                               : !submerged
                               ? "#007bff"
                               : "#fff",
                           color:
-                            submerged === undefined
+                            submerged === null
                               ? false
                               : !submerged
                               ? "#fff"
@@ -336,7 +336,7 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                           dispatch(
                             changeBAreaFlooded({
                               id: _id,
-                              state: undefined,
+                              state: null,
                             })
                           );
                         }}
@@ -356,7 +356,7 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                     <div className="q_buttons">
                       <Button
                         disabled={
-                          bareaflooded === undefined
+                          bareaflooded === null
                             ? false
                             : bareaflooded
                             ? true
@@ -364,13 +364,13 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                         }
                         style={{
                           backgroundColor:
-                            bareaflooded === undefined
+                            bareaflooded === null
                               ? false
                               : bareaflooded
                               ? "#007bff"
                               : "#fff",
                           color:
-                            bareaflooded === undefined
+                            bareaflooded === null
                               ? false
                               : bareaflooded
                               ? "#fff"
@@ -390,7 +390,7 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                       </Button>
                       <Button
                         disabled={
-                          bareaflooded === undefined
+                          bareaflooded === null
                             ? false
                             : !bareaflooded
                             ? true
@@ -398,13 +398,13 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                         }
                         style={{
                           backgroundColor:
-                            bareaflooded === undefined
+                            bareaflooded === null
                               ? false
                               : !bareaflooded
                               ? "#007bff"
                               : "#fff",
                           color:
-                            bareaflooded === undefined
+                            bareaflooded === null
                               ? false
                               : !bareaflooded
                               ? "#fff"
@@ -441,17 +441,17 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                     <Accordion.Toggle as={Button} variant="link" eventKey="1">
                       <Button
                         disabled={
-                          onfire === undefined ? false : onfire ? true : false
+                          onfire === null ? false : onfire ? true : false
                         }
                         style={{
                           backgroundColor:
-                            onfire === undefined
+                            onfire === null
                               ? false
                               : onfire
                               ? "#007bff"
                               : "#fff",
                           color:
-                            onfire === undefined
+                            onfire === null
                               ? false
                               : onfire
                               ? "#fff"
@@ -473,17 +473,17 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                     <Accordion.Toggle as={Button} variant="link" eventKey="0">
                       <Button
                         disabled={
-                          onfire === undefined ? false : !onfire ? true : false
+                          onfire === null ? false : !onfire ? true : false
                         }
                         style={{
                           backgroundColor:
-                            onfire === undefined
+                            onfire === null
                               ? false
                               : !onfire
                               ? "#007bff"
                               : "#fff",
                           color:
-                            onfire === undefined
+                            onfire === null
                               ? false
                               : !onfire
                               ? "#fff"
@@ -515,7 +515,7 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                     <div className="q_buttons">
                       <Button
                         disabled={
-                          anypartofhvexposed === undefined
+                          anypartofhvexposed === null
                             ? false
                             : anypartofhvexposed
                             ? true
@@ -523,13 +523,13 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                         }
                         style={{
                           backgroundColor:
-                            anypartofhvexposed === undefined
+                            anypartofhvexposed === null
                               ? false
                               : anypartofhvexposed
                               ? "#007bff"
                               : "#fff",
                           color:
-                            anypartofhvexposed === undefined
+                            anypartofhvexposed === null
                               ? false
                               : anypartofhvexposed
                               ? "#fff"
@@ -550,7 +550,7 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                       <Button
                         className="q_button"
                         disabled={
-                          anypartofhvexposed === undefined
+                          anypartofhvexposed === null
                             ? false
                             : !anypartofhvexposed
                             ? true
@@ -558,13 +558,13 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                         }
                         style={{
                           backgroundColor:
-                            anypartofhvexposed === undefined
+                            anypartofhvexposed === null
                               ? false
                               : !anypartofhvexposed
                               ? "#007bff"
                               : "#fff",
                           color:
-                            anypartofhvexposed === undefined
+                            anypartofhvexposed === null
                               ? false
                               : !anypartofhvexposed
                               ? "#fff"

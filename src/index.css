@@ -1,4 +1,4 @@
-:root{
+:root {
   --darkColor: #233030;
   --primaryColor: #cde7e1;
   --lighPrimaryColor: #e1f0f0;
@@ -13,16 +13,16 @@ body {
   background-color: var(--primaryColor);
 }
 
-.subnavbar-container{
+.subnavbar-container {
   padding: 10px 0px 5px;
 }
 
-.sidebar-container{
+.sidebar-container {
   background-color: var(--secondaryColor);
   padding: 0px;
 }
 
-.main-container{
+.main-container {
   background-color: var(--accentColor);
   padding: 20px;
 }
@@ -31,7 +31,13 @@ body {
   margin-left: 0;
 }
 
-.d-flex-center{
+.d-flex-center {
   display: flex;
   justify-content: center;
+}
+
+@media screen and (max-width: 770px) {
+  .sidebar-container {
+    display: none;
+  }
 }
