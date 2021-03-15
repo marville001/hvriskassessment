@@ -20,4 +20,17 @@ export {
   changeShutdown,
 } from "./hazardActions";
 
+export {
+  getVdamage,
+  changePosition,
+  changeDamaged,
+  changeBAreaFlooded,
+  changeSubmerged,
+  changeVOnFire,
+  changeSeverity,
+  changeAirBagDeploys,
+  changeWhichAirBag,
+  changeAnyPartOfHvExposed
+} from "./vDamageActions";
+
 export { adminLogin, getLogedInAdmin, logoutAdmin } from "./adminActions";

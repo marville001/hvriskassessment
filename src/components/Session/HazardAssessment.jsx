@@ -12,7 +12,7 @@ import {
 } from "../../_actions/hazardActions";
 import HazardQuestion from "../HazardQuestion";
 
-const HazardAssessment = ({ sessionId,activeStep,setActiveStep }) => {
+const HazardAssessment = ({ sessionId,activeStep,setActiveStep,changeSessionState }) => {
   const { hazard } = useSelector((state) => state.hazardReducer);
   const dispatch = useDispatch();
 
@@ -98,7 +98,7 @@ const HazardAssessment = ({ sessionId,activeStep,setActiveStep }) => {
           </div> */}
 
           <div className="d-flex-center py-5">
-            <Button onClick={()=>setActiveStep(activeStep+1)} variant="success">Next</Button>
+            <Button onClick={()=>changeSessionState(activeStep + 1, "ongoing")} variant="success">Next</Button>
           </div>
         </Container>
       ) : null}

@@ -166,18 +166,22 @@ const Session = (props) => {
                       activeStep={activeStep}
                       setActiveStep={setActiveStep}
                       sessionId={sessionId}
+                      changeSessionState={changeSessionState}
                     />
                   ) : null}
                   {activeStep === 5 ? (
                     <VehicleDamageAssessment
                       activeStep={activeStep}
                       setActiveStep={setActiveStep}
+                      sessionId={sessionId}
+                      changeSessionState={changeSessionState}
                     />
                   ) : null}
                   {activeStep === 6 ? (
                     <HVDamageAssessment
                       activeStep={activeStep}
                       setActiveStep={setActiveStep}
+                      changeSessionState={changeSessionState}
                     />
                   ) : null}
                 </Card.Body>
