@@ -12,7 +12,7 @@ import {
   changeAnySmoke,
   changeBCompDamaged,
   changeBatterySeparated,
-  changeElectricalDamage,
+  // changeElectricalDamage,
   changeCableDamage,
 } from "../../_actions";
 
