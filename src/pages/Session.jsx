@@ -181,6 +181,7 @@ const Session = (props) => {
                     <HVDamageAssessment
                       activeStep={activeStep}
                       setActiveStep={setActiveStep}
+                      sessionId={sessionId}
                       changeSessionState={changeSessionState}
                     />
                   ) : null}

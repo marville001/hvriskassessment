@@ -5,6 +5,7 @@ import { adminReducer } from "./adminReducers";
 import { sessionReducer } from "./sessionReducers";
 import { hazardReducer } from "./hazardReducers";
 import { vDamageReducer } from "./vDamageReducers";
+import { hvDamageReducer } from "./hvDamageReducers";
 
 export const rootReducer = combineReducers({
   adminReducer,
@@ -12,4 +13,5 @@ export const rootReducer = combineReducers({
   sessionReducer,
   hazardReducer,
   vDamageReducer,
+  hvDamageReducer,
 });

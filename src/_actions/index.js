@@ -33,4 +33,16 @@ export {
   changeAnyPartOfHvExposed
 } from "./vDamageActions";
 
+export {
+  getHVdamage,
+  changeBatteryDamaged,
+  changeLeakingFluid,
+  changeOdor,
+  changeAnySmoke,
+  changeBCompDamaged,
+  changeBatterySeparated,
+  changeElectricalDamage,
+  changeCableDamage
+} from "./hvDamageActions";
+
 export { adminLogin, getLogedInAdmin, logoutAdmin } from "./adminActions";
