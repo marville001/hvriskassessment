@@ -7,10 +7,10 @@ import {
 import Axios from "axios";
 
 // Online db
-// const api = "https://hvriskassessment.herokuapp.com";
+const api = "https://hvriskassessment.herokuapp.com";
 
 // offline db
-const api ="http://localhost:5005"
+// const api ="http://localhost:5005"
 
 //
 const userLogin = (user) => async (dispatch) => {

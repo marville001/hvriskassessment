@@ -6,10 +6,10 @@ import {
 } from "../constants/hvDamageConstants";
 
 // Online db
-// const api = "https://hvriskassessment.herokuapp.com";
+const api = "https://hvriskassessment.herokuapp.com";
 
 // offline db
-const api = "http://localhost:5005";
+// const api = "http://localhost:5005";
 
 const getHVdamage = (sessionId) => async (dispatch) => {
   dispatch({ type: CHANGE_HVDAMAGE_REQUEST });
