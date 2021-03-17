@@ -20,9 +20,15 @@ import {
   VEHICLE_ADD_REQUEST,
   VEHICLE_ADD_SUCCESS,
   VEHICLE_ADD_FAILED,
+  VEHICLE_MAKE_REQUEST,
+  VEHICLE_MAKE_SUCCESS,
+  VEHICLE_MAKE_FAILED,
 } from "../_actions/types";
 
-const sessionReducer = (state = { session: {}, sessions: [] }, action) => {
+const sessionReducer = (
+  state = { session: {}, sessions: [], makes: [] },
+  action
+) => {
   switch (action.type) {
     case CREATE_SESSION_REQUEST:
       return { ...state, loading: true };
@@ -79,6 +85,17 @@ const sessionReducer = (state = { session: {}, sessions: [] }, action) => {
         vehicleerror: "",
       };
     case VEHICLE_ADD_FAILED:
+      return { ...state, loading: false, vehicleerror: action.error };
+
+    case VEHICLE_MAKE_REQUEST:
+      return { ...state, loading: true };
+    case VEHICLE_MAKE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        makes: action.make,
+      };
+    case VEHICLE_MAKE_FAILED:
       return { ...state, loading: false, vehicleerror: action.error };
 
     case ALL_SESSION_REQUEST:

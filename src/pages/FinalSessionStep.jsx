@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "react-bootstrap";
 import Wrapper from "../components/Wrapper";
 
 const FinalSessionStep = (props) => {
@@ -9,10 +10,19 @@ const FinalSessionStep = (props) => {
         <h4>No session id given</h4>
       </Wrapper>
     );
-    
+
   return (
     <Wrapper>
-      <h4>Session has ended. A link will be sent to the caller</h4>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <h4 className="text-center">Session has ended. an email has been sent to the caller</h4>
+        <Button href="/sessions">Co to Dashboard</Button>
+      </div>
     </Wrapper>
   );
 };

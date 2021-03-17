@@ -20,14 +20,13 @@ import {
   VEHICLE_ADD_REQUEST,
   VEHICLE_ADD_SUCCESS,
   VEHICLE_ADD_FAILED,
+  VEHICLE_MAKE_REQUEST,
+  VEHICLE_MAKE_SUCCESS,
+  VEHICLE_MAKE_FAILED,
 } from "./types";
 import Axios from "axios";
 
-// Online db
-const api = "https://hvriskassessment.herokuapp.com";
-
-// offline db
-// const api = "http://localhost:5005";
+import api from "./values";
 
 const createSession = (session) => async (dispatch) => {
   dispatch({ type: CREATE_SESSION_REQUEST });
@@ -132,6 +131,19 @@ const getCurrentSession = (sessionId) => async (dispatch) => {
   }
 };
 
+const getVehicleMake = () => async (dispatch) => {
+  dispatch({ type: VEHICLE_MAKE_REQUEST });
+  try {
+    const { data } = await Axios.get(`${api}/api/defaults/make`);
+    dispatch({ type: VEHICLE_MAKE_SUCCESS, make: data.make.make });
+  } catch (error) {
+    dispatch({
+      type: VEHICLE_MAKE_FAILED,
+      error: error.response.data.message,
+    });
+  }
+};
+
 const loadAllSessions = (empId) => async (dispatch) => {
   if (empId) {
     dispatch({ type: ALL_SESSION_REQUEST });
@@ -194,5 +206,6 @@ export {
   updateSessionState,
   addCallerDetails,
   addRPartyDetails,
+  getVehicleMake,
   addVehicleDetails,
 };

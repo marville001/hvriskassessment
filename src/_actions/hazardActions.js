@@ -5,11 +5,7 @@ import {
   CHANGE_HAZARD_SUCCESS,
 } from "../constants/hazardConstants";
 
-// Online db
-const api = "https://hvriskassessment.herokuapp.com";
-
-// offline db
-// const api = "http://localhost:5005";
+import api from './values'
 
 const getHazard = (sessionId) => async (dispatch) => {
   dispatch({ type: CHANGE_HAZARD_REQUEST });

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addVehicleDetails } from "../../_actions";
 const VehicleIdentification = (props) => {
   const dispatch = useDispatch();
-  const { vehicleerror } = useSelector((state) => state.sessionReducer);
+  const { vehicleerror, makes } = useSelector((state) => state.sessionReducer);
 
   const [inputError, setInputError] = useState("");
   const {
@@ -53,28 +53,38 @@ const VehicleIdentification = (props) => {
       changeSessionState(activeStep + 1, "ongoing");
     }
   };
+
+  const makeChange = (e) => {
+    const m = e.target.value;
+    setMake(m);
+  };
+  
   return (
     <Container fluid>
       <h4 className="text-center p-2">Vehicle Identification</h4>
       <Row style={{ display: "flex", justifyContent: "center" }}>
         <Col md={12} lg={12}>
-        {inputError && (
-              <p className="text-center text-danger">{inputError}</p>
-            )}
-            {vehicleerror && (
-              <p className="text-center text-danger">{vehicleerror}</p>
-            )}
+          {inputError && (
+            <p className="text-center text-danger">{inputError}</p>
+          )}
+          {vehicleerror && (
+            <p className="text-center text-danger">{vehicleerror}</p>
+          )}
           <Form autoComplete={false}>
             <Row>
               <Col xs={12} md={6} lg={6}>
                 <Form.Group>
                   <Form.Label>Make</Form.Label>
                   <Form.Control
+                    onChange={makeChange}
+                    as="select"
                     value={make}
-                    onChange={(e) => setMake(e.target.value)}
-                    type="text"
-                    placeholder=""
-                  />
+                    custom
+                    defaultValue="Choose..."
+                  >
+                    <option></option>
+                    {makes.map((make,i)=>(<option id={i}>{make}</option>))}
+                  </Form.Control>
                 </Form.Group>
               </Col>
               <Col xs={12} md={6} lg={6}>

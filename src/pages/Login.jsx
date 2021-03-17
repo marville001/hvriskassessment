@@ -30,18 +30,26 @@ const Login = (props) => {
 
   const formSubmit = (e) => {
     e.preventDefault();
-    
-    dispatch(userLogin(userObj))
-    setEmail("")
-    setPassword("")
+
+    dispatch(userLogin(userObj));
+    setEmail("");
+    setPassword("");
   };
 
   return (
-    <Container style={{backgroundColor:"#fff",position:"absolute",top:"0",bottom:"0"}} fluid>
+    <Container
+      style={{
+        backgroundColor: "#fff",
+        position: "absolute",
+        top: "0",
+        bottom: "0",
+      }}
+      fluid
+    >
       <Row className="form_container">
         <Col className="form_wrapper" sm={12} md={6} xl={4}>
           <h5 className="text-center p-3">Welcome Back. Please Login</h5>
-          {loading && <div className="text-center" >Loading...</div>}
+          {loading && <div className="text-center">Loading...</div>}
           {/* {error && <div className={styles.errorContainer}>{error}</div>} */}
           {error && <div className="text-center text-danger">{error}</div>}
           <Form>

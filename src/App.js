@@ -2,12 +2,13 @@
 import { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Session from "./pages/Session";
 import Sessions from "./pages/Sessions";
+import { AdminHome } from "./pages/admin";
 import { getProfileFetch } from "./_actions/userActions";
 import NotFound from "./pages/NotFound";
 import { loadAllSessions } from "./_actions";
@@ -19,11 +20,10 @@ function App() {
   const { user } = useSelector((state) => state.userReducer);
   useEffect(() => {
     dispatch(getProfileFetch());
-    
   }, []);
 
   useEffect(() => {
-    if(user._id){
+    if (user._id) {
       dispatch(loadAllSessions(user.idnumber));
     }
   }, [user]);
@@ -33,13 +33,14 @@ function App() {
       <Switch>
         <Route exact path="/">
           <AuthenticateLogin>
-            <Home/>
+            <Home />
           </AuthenticateLogin>
         </Route>
         <Route path="/login" component={Login} />
         <Route path="/sessions" component={Sessions} />
         <Route path="/session/:sessionid" component={Session} />
         <Route path="/sessionend" component={FinalSessionStep} />
+        <Route path="/admin" component={AdminHome} />
         <Route component={NotFound} />
       </Switch>
     </div>

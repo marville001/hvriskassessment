@@ -7,6 +7,7 @@ export {
   updateSessionState,
   addCallerDetails,
   addRPartyDetails,
+  getVehicleMake,
   addVehicleDetails,
 } from "./sessionActions";
 
@@ -30,7 +31,7 @@ export {
   changeSeverity,
   changeAirBagDeploys,
   changeWhichAirBag,
-  changeAnyPartOfHvExposed
+  changeAnyPartOfHvExposed,
 } from "./vDamageActions";
 
 export {
@@ -42,7 +43,13 @@ export {
   changeBCompDamaged,
   changeBatterySeparated,
   changeElectricalDamage,
-  changeCableDamage
+  changeCableDamage,
 } from "./hvDamageActions";
 
-export { adminLogin, getLogedInAdmin, logoutAdmin } from "./adminActions";
+export {
+  adminLogin,
+  getLogedInAdmin,
+  logoutAdmin,
+  getAllAdmins,
+  getAllEmployees,
+} from "./adminActions";

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import HazardQuestion from "../HazardQuestion";
@@ -15,6 +15,8 @@ import {
   changeElectricalDamage,
   changeCableDamage,
 } from "../../_actions";
+import axios from "axios";
+import api from "../../_actions/values";
 
 const HVDamageAssessment = ({
   sessionId,
@@ -25,9 +27,33 @@ const HVDamageAssessment = ({
   const { hvdamage } = useSelector((state) => state.hvDamageReducer);
   const dispatch = useDispatch();
 
+  const sendEmail = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const data = await axios.post(
+        api + "/api/email/send",
+        {
+          body: "Click the link below to upload photos",
+          link: "https:lgsfsf.hfhf/gfgfg/gdgdg/gfgfg",
+          sessionId,
+          subject: "Upload Photos",
+          email: "martin.mwangi.1904@gmail.com",
+        },
+        {
+          headers: {
+            "x-auth-token": token,
+          },
+        }
+      );
+      console.log(data);
+      changeSessionState(activeStep + 1, "ended");
+    } catch (error) {
+      alert("An error has occured", error);
+    }
+  };
+
   const endSession = () => {
-    changeSessionState(activeStep + 1, "ended")
-    window.location.href = "/sessionend?sessionid=" + sessionId;
+    sendEmail();
   };
 
   useEffect(() => {
@@ -123,23 +149,65 @@ const HVDamageAssessment = ({
               </div>
               <div className="q_buttons">
                 <Button
-                disabled={hvdamage.cabledamage === null ? false : hvdamage.cabledamage ? true : false}
-                style={{
-                  backgroundColor:
-                    hvdamage.cabledamage === null ? false : hvdamage.cabledamage ? "#007bff" : "#fff",
-                  color: hvdamage.cabledamage === null ? false : hvdamage.cabledamage ? "#fff" : "#007bff",
-                }}
-                className="q_button" onClick={() => dispatch(changeCableDamage({ id: hvdamage._id, state: true }))}>
+                  disabled={
+                    hvdamage.cabledamage === null
+                      ? false
+                      : hvdamage.cabledamage
+                      ? true
+                      : false
+                  }
+                  style={{
+                    backgroundColor:
+                      hvdamage.cabledamage === null
+                        ? false
+                        : hvdamage.cabledamage
+                        ? "#007bff"
+                        : "#fff",
+                    color:
+                      hvdamage.cabledamage === null
+                        ? false
+                        : hvdamage.cabledamage
+                        ? "#fff"
+                        : "#007bff",
+                  }}
+                  className="q_button"
+                  onClick={() =>
+                    dispatch(
+                      changeCableDamage({ id: hvdamage._id, state: true })
+                    )
+                  }
+                >
                   YES
                 </Button>
-                <Button 
-                disabled={hvdamage.cabledamage === null ? false : !hvdamage.cabledamage ? true : false}
-                style={{
-                  backgroundColor:
-                    hvdamage.cabledamage === null ? false : !hvdamage.cabledamage ? "#007bff" : "#fff",
-                  color: hvdamage.cabledamage === null ? false : !hvdamage.cabledamage ? "#fff" : "#007bff",
-                }}
-                className="q_button" onClick={() => dispatch(changeCableDamage({ id: hvdamage._id, state: false }))}>
+                <Button
+                  disabled={
+                    hvdamage.cabledamage === null
+                      ? false
+                      : !hvdamage.cabledamage
+                      ? true
+                      : false
+                  }
+                  style={{
+                    backgroundColor:
+                      hvdamage.cabledamage === null
+                        ? false
+                        : !hvdamage.cabledamage
+                        ? "#007bff"
+                        : "#fff",
+                    color:
+                      hvdamage.cabledamage === null
+                        ? false
+                        : !hvdamage.cabledamage
+                        ? "#fff"
+                        : "#007bff",
+                  }}
+                  className="q_button"
+                  onClick={() =>
+                    dispatch(
+                      changeCableDamage({ id: hvdamage._id, state: false })
+                    )
+                  }
+                >
                   NO
                 </Button>
               </div>

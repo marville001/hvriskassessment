@@ -14,10 +14,15 @@ import {
 import { Card } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import PausedSession from "../components/Session/PausedSession";
-import { updateSessionState , getCurrentSession} from "../_actions";
+import {
+  updateSessionState,
+  getCurrentSession,
+  getVehicleMake,
+} from "../_actions";
 import Loading from "../components/Session/Loading";
 import Error from "../components/Session/Error";
 import EndedSession from "../components/Session/EndedSession";
+import { Redirect } from "react-router-dom";
 
 const Session = (props) => {
   const dispatch = useDispatch();
@@ -66,6 +71,7 @@ const Session = (props) => {
 
   useEffect(() => {
     dispatch(getCurrentSession(props.match.params.sessionid));
+    dispatch(getVehicleMake());
   }, []);
 
   useEffect(() => {
@@ -78,121 +84,123 @@ const Session = (props) => {
   };
 
   return (
-      <Wrapper>
-          {loading ? (
-            <Loading />
-          ) : error ? (
-            <Error error={error} />
-          ) : !session._id? <h4 className="text-center">No Session Found with given id</h4> : (
-            sessionState === "ongoing" && (
-              <Card style={{margin: "-18px", border:"0px", borderRadius:"0px"}}>
-                <Card.Header className="bg-white">
-                  <h4 className="text-dark">
-                    HV Risk Assessment -{" "}
-                  </h4>
-                </Card.Header>
-                <Card.Body>
-                  {/* <SessionProgress activeStep={activeStep} /> */}
-                  {activeStep === 0 ? (
-                    <AgentIdentification
-                      activeStep={activeStep}
-                      setActiveStep={setActiveStep}
-                      changeSessionState={changeSessionState}
-                    />
-                  ) : null}
-                  {activeStep === 1 ? (
-                    <CallerIdentification
-                      activeStep={activeStep}
-                      setName={setName}
-                      setNumber={setNumber}
-                      setEmail={setEmail}
-                      setSupervisor={setSupervisor}
-                      setOAddress={setOAddress}
-                      setONumber={setONumber}
-                      setLocation={setLocation}
-                      setOrganization={setOrganization}
-                      number={number}
-                      name={name}
-                      email={email}
-                      sup={supervisor}
-                      oa={organization_address}
-                      on={organization_number}
-                      loc={location}
-                      org={organization}
-                      changeSessionState={changeSessionState}
-                      sessionId={sessionId}
-                    />
-                  ) : null}
-                  {activeStep === 2 ? (
-                    <ResponsibleParty
-                      activeStep={activeStep}
-                      setActiveStep={setActiveStep}
-                      rpname={rpname}
-                      rpnumber={rpnumber}
-                      policy={policy}
-                      cNumber={cNumber}
-                      rpaddress={rpaddress}
-                      insprovider={insprovider}
-                      setRPName={setRPName}
-                      setRPNumber={setRPNumber}
-                      setPolicy={setPolicy}
-                      setCNumber={setCNumber}
-                      setRPAddress={setRPAddress}
-                      setIProvider={setIProvider}
-                      changeSessionState={changeSessionState}
-                      sessionId={sessionId}
-                    />
-                  ) : null}
-                  {activeStep === 3 ? (
-                    <VehicleIdentification
-                      activeStep={activeStep}
-                      changeSessionState={changeSessionState}
-                      sessionId={sessionId}
-                      make={make}
-                      model={model}
-                      year={year}
-                      vin={vin}
-                      lpstate={lpstate}
-                      licence={licence}
-                      setMake={setMake}
-                      setModel={setModel}
-                      setYear={setYear}
-                      setVin={setVin}
-                      setLPState={setLPState}
-                      setLicence={setLicence}
-                    />
-                  ) : null}
-                  {activeStep === 4 ? (
-                    <HazardAssessment
-                      activeStep={activeStep}
-                      setActiveStep={setActiveStep}
-                      sessionId={sessionId}
-                      changeSessionState={changeSessionState}
-                    />
-                  ) : null}
-                  {activeStep === 5 ? (
-                    <VehicleDamageAssessment
-                      activeStep={activeStep}
-                      setActiveStep={setActiveStep}
-                      sessionId={sessionId}
-                      changeSessionState={changeSessionState}
-                    />
-                  ) : null}
-                  {activeStep === 6 ? (
-                    <HVDamageAssessment
-                      activeStep={activeStep}
-                      setActiveStep={setActiveStep}
-                      sessionId={sessionId}
-                      changeSessionState={changeSessionState}
-                    />
-                  ) : null}
-                </Card.Body>
-              </Card>
-            )
-          )}
-          {sessionState === "paused" && <PausedSession />}
-          {sessionState === "ended" && <EndedSession />}
-        </Wrapper>
+    <Wrapper>
+      {loading ? (
+        <Loading />
+      ) : error ? (
+        <Error error={error} />
+      ) : !session._id ? (
+        <h4 className="text-center">No Session Found with given id</h4>
+      ) : (
+        sessionState === "ongoing" && (
+          <Card style={{ margin: "-18px", border: "0px", borderRadius: "0px" }}>
+            <Card.Header className="bg-white">
+              <h4 className="text-dark">HV Risk Assessment - </h4>
+            </Card.Header>
+            <Card.Body>
+              {/* <SessionProgress activeStep={activeStep} /> */}
+              {activeStep === 0 ? (
+                <AgentIdentification
+                  activeStep={activeStep}
+                  setActiveStep={setActiveStep}
+                  changeSessionState={changeSessionState}
+                />
+              ) : null}
+              {activeStep === 1 ? (
+                <CallerIdentification
+                  activeStep={activeStep}
+                  setName={setName}
+                  setNumber={setNumber}
+                  setEmail={setEmail}
+                  setSupervisor={setSupervisor}
+                  setOAddress={setOAddress}
+                  setONumber={setONumber}
+                  setLocation={setLocation}
+                  setOrganization={setOrganization}
+                  number={number}
+                  name={name}
+                  email={email}
+                  sup={supervisor}
+                  oa={organization_address}
+                  on={organization_number}
+                  loc={location}
+                  org={organization}
+                  changeSessionState={changeSessionState}
+                  sessionId={sessionId}
+                />
+              ) : null}
+              {activeStep === 2 ? (
+                <ResponsibleParty
+                  activeStep={activeStep}
+                  setActiveStep={setActiveStep}
+                  rpname={rpname}
+                  rpnumber={rpnumber}
+                  policy={policy}
+                  cNumber={cNumber}
+                  rpaddress={rpaddress}
+                  insprovider={insprovider}
+                  setRPName={setRPName}
+                  setRPNumber={setRPNumber}
+                  setPolicy={setPolicy}
+                  setCNumber={setCNumber}
+                  setRPAddress={setRPAddress}
+                  setIProvider={setIProvider}
+                  changeSessionState={changeSessionState}
+                  sessionId={sessionId}
+                />
+              ) : null}
+              {activeStep === 3 ? (
+                <VehicleIdentification
+                  activeStep={activeStep}
+                  changeSessionState={changeSessionState}
+                  sessionId={sessionId}
+                  make={make}
+                  model={model}
+                  year={year}
+                  vin={vin}
+                  lpstate={lpstate}
+                  licence={licence}
+                  setMake={setMake}
+                  setModel={setModel}
+                  setYear={setYear}
+                  setVin={setVin}
+                  setLPState={setLPState}
+                  setLicence={setLicence}
+                />
+              ) : null}
+              {activeStep === 4 ? (
+                <HazardAssessment
+                  activeStep={activeStep}
+                  setActiveStep={setActiveStep}
+                  sessionId={sessionId}
+                  changeSessionState={changeSessionState}
+                />
+              ) : null}
+              {activeStep === 5 ? (
+                <VehicleDamageAssessment
+                  activeStep={activeStep}
+                  setActiveStep={setActiveStep}
+                  sessionId={sessionId}
+                  changeSessionState={changeSessionState}
+                />
+              ) : null}
+              {activeStep === 6 ? (
+                <HVDamageAssessment
+                  activeStep={activeStep}
+                  setActiveStep={setActiveStep}
+                  sessionId={sessionId}
+                  changeSessionState={changeSessionState}
+                />
+              ) : (
+                <Redirect to={`sessionend?sessionid=${sessionId}`} />
+              )}
+            </Card.Body>
+          </Card>
+        )
+      )}
+      {sessionState === "paused" && <PausedSession />}
+      {sessionState === "ended" && <EndedSession />}
+    </Wrapper>
   );
 };
 
