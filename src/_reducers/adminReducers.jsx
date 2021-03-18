@@ -12,10 +12,22 @@ import {
   ALL_EMPLOYEES_FAILED,
   ALL_EMPLOYEES_SUCCESS,
   ALL_EMPLOYEES_REQUEST,
+  ALL_SESSIONS_FAILED,
+  ALL_SESSIONS_SUCCESS,
+  ALL_SESSIONS_REQUEST,
+  ALL_CALLERS_FAILED,
+  ALL_CALLERS_SUCCESS,
+  ALL_CALLERS_REQUEST,
+  ADD_ADMIN_REQUEST,
+  ADD_ADMIN_SUCCESS,
+  ADD_ADMIN_FAILED,
+  ADD_EMPLOYEE_REQUEST,
+  ADD_EMPLOYEE_SUCCESS,
+  ADD_EMPLOYEE_FAILED,
 } from "../constants/adminConstants";
 
 const adminReducer = (
-  state = { employees: [], admins: [], admin: {} },
+  state = { employees: [], sessions: [], callers: [], admins: [], admin: {} },
   action
 ) => {
   switch (action.type) {
@@ -25,6 +37,30 @@ const adminReducer = (
       return { ...state, loading: false, admin: action.admin, error: "" };
     case ADMIN_SIGNIN_FAILED:
       return { ...state, loading: false, error: action.error };
+
+    case ADD_ADMIN_REQUEST:
+      return { ...state, addloading: true };
+    case ADD_ADMIN_SUCCESS:
+      return {
+        ...state,
+        addloading: false,
+        admins: [...state.admins, action.admin],
+        error: "",
+      };
+    case ADD_ADMIN_FAILED:
+      return { ...state, addloading: false, adderror: action.error };
+
+    case ADD_EMPLOYEE_REQUEST:
+      return { ...state, addloading: true };
+    case ADD_EMPLOYEE_SUCCESS:
+      return {
+        ...state,
+        addloading: false,
+        employees: [...state.employees, action.employee],
+        adderror: "",
+      };
+    case ADD_EMPLOYEE_FAILED:
+      return { ...state, addloading: false, adderror: action.error };
 
     case ALL_ADMIN_REQUEST:
       return { ...state, loading: true };
@@ -43,6 +79,30 @@ const adminReducer = (
         error: "",
       };
     case ALL_EMPLOYEES_FAILED:
+      return { ...state, loading: false, error: action.error };
+
+    case ALL_SESSIONS_REQUEST:
+      return { ...state, loading: true };
+    case ALL_SESSIONS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        sessions: action.sessions,
+        error: "",
+      };
+    case ALL_SESSIONS_FAILED:
+      return { ...state, loading: false, error: action.error };
+
+    case ALL_CALLERS_REQUEST:
+      return { ...state, loading: true };
+    case ALL_CALLERS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        callers: action.callers,
+        error: "",
+      };
+    case ALL_CALLERS_FAILED:
       return { ...state, loading: false, error: action.error };
 
     case ADMIN_LOGOUT:

@@ -199,6 +199,30 @@ const updateSessionState = ({ step, state, sessionId }) => async (dispatch) => {
   }
 };
 
+const pauseSession = ({ sessionId }) => async (dispatch) => {
+  const token = localStorage.token;
+  dispatch({ type: UPDATE_SESSION_REQUEST });
+  try {
+    const { data } = await Axios.put(
+      `${api}/api/session/pause/${sessionId}`,
+      {
+        state: "paused",
+      },
+      {
+        headers: {
+          "x-auth-token": token,
+        },
+      }
+    );
+    dispatch({ type: UPDATE_SESSION_SUCCESS, session: data.session });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_SESSION_FAILED,
+      error: error.response.data.message,
+    });
+  }
+};
+
 export {
   createSession,
   getCurrentSession,
@@ -208,4 +232,5 @@ export {
   addRPartyDetails,
   getVehicleMake,
   addVehicleDetails,
+  pauseSession,
 };

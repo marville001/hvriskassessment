@@ -22,7 +22,6 @@ import {
 import Loading from "../components/Session/Loading";
 import Error from "../components/Session/Error";
 import EndedSession from "../components/Session/EndedSession";
-import { Redirect } from "react-router-dom";
 
 const Session = (props) => {
   const dispatch = useDispatch();
@@ -191,17 +190,14 @@ const Session = (props) => {
                   sessionId={sessionId}
                   changeSessionState={changeSessionState}
                 />
-              ) : (
-                <Redirect to={`sessionend?sessionid=${sessionId}`} />
-              )}
+              ) : null}
             </Card.Body>
           </Card>
         )
       )}
       {sessionState === "paused" && (
         <PausedSession
-          activeStep={activeStep}
-          changeSessionState={changeSessionState}
+          sessionId={sessionId}
         />
       )}
       {sessionState === "ended" && <EndedSession />}

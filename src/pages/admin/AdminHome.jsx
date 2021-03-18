@@ -7,7 +7,13 @@ import Dashboard from "./components/Dashboard";
 import AdminLogin from "./AdminLogin";
 import Users from "./components/Users";
 import { useDispatch } from "react-redux";
-import { getAllAdmins, getAllEmployees, getLogedInAdmin } from "../../_actions";
+import {
+  getAllAdmins,
+  getAllcallers,
+  getAllEmployees,
+  getAllSessions,
+  getLogedInAdmin,
+} from "../../_actions";
 import Sessions from "./components/Sessions";
 import AdminSidebar from "./components/AdminSidebar";
 
@@ -18,6 +24,8 @@ const AdminHome = () => {
     dispatch(getLogedInAdmin());
     dispatch(getAllAdmins());
     dispatch(getAllEmployees());
+    dispatch(getAllSessions());
+    dispatch(getAllcallers());
   }, []);
   return (
     <div>

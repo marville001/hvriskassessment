@@ -9,10 +9,14 @@ import {
   Row,
   Table,
 } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addAdmin, addEmployee } from "../../../_actions";
 
 const Users = () => {
-  const { admins, employees } = useSelector((state) => state.adminReducer);
+  const { admins, employees, addloading, adderror } = useSelector(
+    (state) => state.adminReducer
+  );
+  const dispatch = useDispatch();
   const [ashow, setAShow] = useState(false);
   const [eshow, setEShow] = useState(false);
 
@@ -42,8 +46,24 @@ const Users = () => {
     setEmpId("");
   };
 
-  const handleAddEmployee = () => {};
-  const handleAddAdmin = () => {};
+  const handleAddEmployee = () => {
+    dispatch(
+      addEmployee({
+        name: empName,
+        idnumber: empId,
+        email: empEmail,
+        password: empPassword,
+      })
+    );
+    setEShow(false);
+  };
+
+  const handleAddAdmin = () => {
+    dispatch(
+      addAdmin({ name: adminName, email: adminEmail, password: adminPassword })
+    );
+    setAShow(false);
+  };
 
   return (
     <div>
@@ -92,6 +112,9 @@ const Users = () => {
             <Modal.Title>Add Admin</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            {adderror && (
+              <h6 className="text-danger text-center">{adderror}</h6>
+            )}
             <Form>
               <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>
@@ -131,8 +154,12 @@ const Users = () => {
             <Button variant="secondary" onClick={handleAdminClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleAddAdmin}>
-              Add Admin
+            <Button
+              variant="primary"
+              disabled={addloading ? true : false}
+              onClick={handleAddAdmin}
+            >
+              {addloading ? "Loading..." : "Add Admin"}
             </Button>
           </Modal.Footer>
         </Modal>
@@ -165,7 +192,7 @@ const Users = () => {
                   <tbody>
                     {employees.map((employee, i) => (
                       <tr key={employee._id}>
-                        <td>{i+1}</td>
+                        <td>{i + 1}</td>
                         <td>{employee.name}</td>
                         <td>{employee.idnumber}</td>
                         <td>{employee.email}</td>
@@ -184,6 +211,9 @@ const Users = () => {
             <Modal.Title>Add Employee</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            {adderror && (
+              <h6 className="text-danger text-center">{adderror}</h6>
+            )}
             <Form>
               <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>
@@ -233,8 +263,12 @@ const Users = () => {
             <Button variant="secondary" onClick={handleEmployeeClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleAddEmployee}>
-              Add Employee
+            <Button
+              variant="primary"
+              disabled={addloading ? true : false}
+              onClick={handleAddEmployee}
+            >
+              {addloading ? "Loading..." : "Add Employee"}
             </Button>
           </Modal.Footer>
         </Modal>

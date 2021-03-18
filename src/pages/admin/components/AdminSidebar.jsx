@@ -14,11 +14,14 @@ const AdminSidebar = () => {
         <ListGroup.Item action href="/admin/users">
           Users
         </ListGroup.Item>
-        <ListGroup.Item action href="">
+        <ListGroup.Item action href="/admin/make">
           Make
         </ListGroup.Item>
-        <ListGroup.Item action href="">
+        <ListGroup.Item action href="/admin/models">
           Models
+        </ListGroup.Item>
+        <ListGroup.Item action href="/admin/uploads">
+          Uploads
         </ListGroup.Item>
       </ListGroup>
     </div>

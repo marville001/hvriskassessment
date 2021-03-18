@@ -6,13 +6,8 @@ import {
 } from "./types";
 import Axios from "axios";
 
-// Online db
-// const api = "https://hvriskassessment.herokuapp.com";
+import api from './values'
 
-// offline db
-const api ="http://localhost:5005"
-
-//
 const userLogin = (user) => async (dispatch) => {
   dispatch({ type: USER_SIGNIN_REQUEST, payload: user });
   try {

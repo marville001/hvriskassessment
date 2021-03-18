@@ -1,7 +1,28 @@
+import axios from "axios";
 import React from "react";
 import { Button } from "react-bootstrap";
+import api from "../../_actions/values";
 
-const PausedSession = ({ activeStep, changeSessionState }) => {
+const PausedSession = ({ sessionId }) => {
+  const resumeSession = async () => {
+    const token = localStorage.token;
+    try {
+      await axios.put(
+        `${api}/api/session/resume/${sessionId}`,
+        {
+          state: "ongoing",
+        },
+        {
+          headers: {
+            "x-auth-token": token,
+          },
+        }
+      );
+      const page = window.location.href;
+      window.location.href = page;
+    } catch (error) {}
+  };
+
   return (
     <div
       style={{
@@ -13,9 +34,7 @@ const PausedSession = ({ activeStep, changeSessionState }) => {
       }}
     >
       <h3>Session paused temporarily</h3>
-      <Button onClick={() => changeSessionState(activeStep, "ongoing")}>
-        Resume
-      </Button>
+      <Button onClick={resumeSession}>Resume</Button>
     </div>
   );
 };
