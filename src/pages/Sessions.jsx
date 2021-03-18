@@ -150,6 +150,11 @@ const Sessions = () => {
                         <Button href={"/session/" + session._id}>Resume</Button>
                       </td>
                     )}
+                    {session.state === "ended" && (
+                      <td>
+                        <Button disabled>Ended</Button>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>

@@ -198,7 +198,12 @@ const Session = (props) => {
           </Card>
         )
       )}
-      {sessionState === "paused" && <PausedSession />}
+      {sessionState === "paused" && (
+        <PausedSession
+          activeStep={activeStep}
+          changeSessionState={changeSessionState}
+        />
+      )}
       {sessionState === "ended" && <EndedSession />}
     </Wrapper>
   );

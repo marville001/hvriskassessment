@@ -34,10 +34,9 @@ const HVDamageAssessment = ({
         api + "/api/email/send",
         {
           body: "Click the link below to upload photos",
-          link: "https:lgsfsf.hfhf/gfgfg/gdgdg/gfgfg",
+          link: `${api}+/upload/${sessionId}`,
           sessionId,
           subject: "Upload Photos",
-          email: "martin.mwangi.1904@gmail.com",
         },
         {
           headers: {

@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import { loadAllSessions } from "./_actions";
 import AuthenticateLogin from "./pages/AuthenticateLogin";
 import FinalSessionStep from "./pages/FinalSessionStep";
+import Upload from "./pages/Upload";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ function App() {
         <Route path="/session/:sessionid" component={Session} />
         <Route path="/sessionend" component={FinalSessionStep} />
         <Route path="/admin" component={AdminHome} />
+        <Route path="/upload/:sessionid" component={Upload} />
         <Route component={NotFound} />
       </Switch>
     </div>
