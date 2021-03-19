@@ -23,7 +23,7 @@ const NavBar = () => {
           <Nav className="mr-auto">
             <Nav.Link href="/"><h5>Home</h5></Nav.Link>
             <Nav.Link href="/sessions"><h5>Sessions</h5></Nav.Link>
-            <Nav.Link href="/"><h5>Profile</h5></Nav.Link>
+            <Nav.Link href="/profile"><h5>Profile</h5></Nav.Link>
           </Nav>
           <Nav style={{marginRight: "20px"}}>
             <NavDropdown title={"Profile"} id="collasible-nav-dropdown">
