@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Wrapper from "../components/Wrapper";
 import {
@@ -12,16 +13,26 @@ import {
   Table,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { createSession } from "../_actions";
+import {
+  changeSessionCount,
+  changeSessionKeyword,
+  changeSessionState,
+  createSession,
+  loadAllSessions,
+} from "../_actions";
 
 const Sessions = () => {
-  const { session, sessions, loading, error } = useSelector(
-    (state) => state.sessionReducer
-  );
+  const {
+    sessions,
+    loading,
+    loading_all,
+    searchby,
+    state,
+    sessionsCount,
+    keyword,
+  } = useSelector((state) => state.sessionReducer);
   const { user } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
-
-  const [sessionMsg, setSessionMsg] = useState("");
 
   const createSessionSubmit = () => {
     const sessionObj = {
@@ -33,36 +44,31 @@ const Sessions = () => {
     dispatch(createSession(sessionObj));
   };
 
+
   useEffect(() => {
-    if (session._id) {
-      if (session.state === "ongoing") {
-        setSessionMsg("You currently have an ongoing session");
-      } else if (session.state === "paused") {
-        setSessionMsg("You have a temporarily paused session");
-      } else {
-        setSessionMsg("");
-      }
-    }
-  }, [session]);
+    dispatch(
+      loadAllSessions(user.idnumber, sessionsCount, keyword, state, searchby)
+    );
+  }, [sessionsCount, keyword, state]);
 
-  const getDate= (string)=>{
-      const date = new Date(string);
-      const datestring = date.getDate() +"-"+(date.getMonth()+1)+ "-"+date.getFullYear()
+  const getDate = (string) => {
+    const date = new Date(string);
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    let day = date.getDate();
+    day = day < 10 ? 0 + "" + day : day;
+    month = month < 10 ? 0 + "" + month : month;
+    const datestring = month + "-" + day + "-" + year;
 
-      return datestring;
-  }
+    return datestring;
+  };
+
+  const [searchWord, setSearchWord] = useState("");
+
   return (
     <Wrapper>
       <div className="session-button-container">
-        {session._id && session.state === "ongoing" ? (
-          <Button
-            className="session-button"
-            href={`/session/${session._id}`}
-            onClick={createSessionSubmit}
-          >
-            {"Go to Session"}
-          </Button>
-        ) : (
+        
           <Button
             className="session-button"
             disabled={loading ? true : false}
@@ -85,38 +91,76 @@ const Sessions = () => {
               "Start New Session"
             )}
           </Button>
-        )}
-        {sessionMsg && <p>{sessionMsg}</p>}
-        {error && <p className="text-danger">{error}</p>}
       </div>
       <Container>
         <Row
           style={{
-            justifyContent: "center",
+            justifyContent: "space-between",
             marginTop: "30px",
             marginBottom: "15px",
           }}
         >
-          <Col xs={12} sm={8} lg={6}>
+          <Col xs={2} sm={2}>
+            <Form.Control
+              onChange={(e) => dispatch(changeSessionCount(e.target.value))}
+              as="select"
+            >
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={20}>20</option>
+              <option value={50}>50</option>
+              <option value={100}>100</option>
+            </Form.Control>
+          </Col>
+
+          <Col xs={2} sm={3}>
+            <Form.Control
+              onChange={(e) => dispatch(changeSessionState(e.target.value))}
+              as="select"
+            >
+              <option value="all">All Sessions</option>
+              <option value="paused">Paused Sessions</option>
+              <option value="ongoing">Ongoing Sessions</option>
+              <option value="ended">Ended Session</option>
+            </Form.Control>
+          </Col>
+        </Row>
+        <Row
+          style={{
+            justifyContent: "space-between",
+            marginTop: "10px",
+            marginBottom: "15px",
+          }}
+        >
+          <Col xs={6} sm={6}>
+            <Col xs={12} style={{ display: "flex", alignItems: "center" }}>
+              <span>By</span>
+              <Form.Control
+                style={{ display: "inline" }}
+                onChange={(e) => {}}
+                as="select"
+              >
+                <option value="sessionstate">Session State</option>
+                <option value="Ccallername">Caller Name</option>
+              </Form.Control>
+            </Col>
+          </Col>
+          <Col xs={6} sm={6}>
             <InputGroup>
               <FormControl
                 type="text"
                 placeholder="Search by..."
                 aria-label="Input group example"
                 aria-describedby="btnGroupAddon"
+                value={searchWord}
+                onChange={(e) => setSearchWord(e.target.value)}
               />
-              <InputGroup.Append>
+              <InputGroup.Append
+                onClick={() => dispatch(changeSessionKeyword(searchWord))}
+              >
                 <InputGroup.Text id="btnGroupAddon">Search</InputGroup.Text>
               </InputGroup.Append>
             </InputGroup>
-          </Col>
-          <Col xs={12} sm={4} lg={4}>
-            <Form.Control as="select">
-              <option>All Sessions</option>
-              <option>Paused Sessions</option>
-              <option>Ongoing Sessions</option>
-              <option>Terminatd Session</option>
-            </Form.Control>
           </Col>
         </Row>
         <Row>
@@ -132,31 +176,39 @@ const Sessions = () => {
                 </tr>
               </thead>
               <tbody>
-                {sessions.map((session, index) => (
+                {loading_all ? (
                   <tr>
-                    <td>{index + 1}</td>
-                    <td>{session._id}</td>
-                    <td colSpan={2}>{getDate(session.date)}</td>
-                    <td>{session.state}</td>
-                    {session.state === "ongoing" && (
-                      <td>
-                        <Button href={"/session/" + session._id}>
-                          Continue
-                        </Button>
-                      </td>
-                    )}
-                    {session.state === "paused" && (
-                      <td>
-                        <Button href={"/session/" + session._id}>Resume</Button>
-                      </td>
-                    )}
-                    {session.state === "ended" && (
-                      <td>
-                        <Button disabled>Ended</Button>
-                      </td>
-                    )}
+                    <h4>Loading....</h4>
                   </tr>
-                ))}
+                ) : (
+                  sessions.map((session, index) => (
+                    <tr>
+                      <td>{index + 1}</td>
+                      <td>{session._id}</td>
+                      <td colSpan={2}>{getDate(session.date)}</td>
+                      <td>{session.state}</td>
+                      {session.state === "ongoing" && (
+                        <td>
+                          <Button href={"/session/" + session._id}>
+                            Continue
+                          </Button>
+                        </td>
+                      )}
+                      {session.state === "paused" && (
+                        <td>
+                          <Button href={"/session/" + session._id}>
+                            Resume
+                          </Button>
+                        </td>
+                      )}
+                      {session.state === "ended" && (
+                        <td>
+                          <Button disabled>Ended</Button>
+                        </td>
+                      )}
+                    </tr>
+                  ))
+                )}
               </tbody>
             </Table>
           </Col>

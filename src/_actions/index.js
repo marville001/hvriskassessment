@@ -6,8 +6,11 @@ export {
   loadAllSessions,
   updateSessionState,
   getVehicleMake,
-  addVehicleDetails,
   pauseSession,
+  changeSessionCount,
+  changeSessionKeyword,
+  changeSessionState,
+  changeSessionSearchBy,
 } from "./sessionActions";
 
 export {

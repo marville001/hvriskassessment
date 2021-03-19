@@ -17,13 +17,34 @@ import {
   VEHICLE_MAKE_REQUEST,
   VEHICLE_MAKE_SUCCESS,
   VEHICLE_MAKE_FAILED,
+  CHANGE_SESSIONS_COUNT,
+  CHANGE_SESSIONS_KEYWORD,
+  CHANGE_SESSIONS_STATE,
+  CHANGE_SESSIONS_SEARCHBY,
 } from "../_actions/types";
 
 const sessionReducer = (
-  state = { session: {}, sessions: [], makes: [] },
+  state = {
+    session: {},
+    sessions: [],
+    sessionsCount: 10,
+    keyword: "key",
+    state: "all",
+    searchby: "sessionstate",
+    makes: [],
+  },
   action
 ) => {
   switch (action.type) {
+    case CHANGE_SESSIONS_COUNT:
+      return { ...state, sessionsCount: action.count };
+    case CHANGE_SESSIONS_KEYWORD:
+      return { ...state, keyword: action.keyword };
+    case CHANGE_SESSIONS_STATE:
+      return { ...state, state: action.state };
+    case CHANGE_SESSIONS_SEARCHBY:
+      return { ...state, searchby: action.searchby };
+
     case CREATE_SESSION_REQUEST:
       return { ...state, loading: true };
     case CREATE_SESSION_SUCCESS:

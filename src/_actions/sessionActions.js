@@ -11,16 +11,45 @@ import {
   UPDATE_SESSION_REQUEST,
   UPDATE_SESSION_SUCCESS,
   UPDATE_SESSION_FAILED,
-  VEHICLE_ADD_REQUEST,
-  VEHICLE_ADD_SUCCESS,
-  VEHICLE_ADD_FAILED,
   VEHICLE_MAKE_REQUEST,
   VEHICLE_MAKE_SUCCESS,
   VEHICLE_MAKE_FAILED,
+  CHANGE_SESSIONS_COUNT,
+  CHANGE_SESSIONS_KEYWORD,
+  CHANGE_SESSIONS_STATE,
+  CHANGE_SESSIONS_SEARCHBY,
 } from "./types";
 import Axios from "axios";
 
 import api from "./values";
+
+const changeSessionCount = (count) => async (dispatch) => {
+  dispatch({
+    type: CHANGE_SESSIONS_COUNT,
+    count: count,
+  });
+};
+
+const changeSessionKeyword = (keyword) => async (dispatch) => {
+  dispatch({
+    type: CHANGE_SESSIONS_KEYWORD,
+    keyword: keyword,
+  });
+};
+
+const changeSessionState = (state) => async (dispatch) => {
+  dispatch({
+    type: CHANGE_SESSIONS_STATE,
+    state: state,
+  });
+};
+
+const changeSessionSearchBy = (searchby) => async (dispatch) => {
+  dispatch({
+    type: CHANGE_SESSIONS_SEARCHBY,
+    searchby: searchby,
+  });
+};
 
 const createSession = (session) => async (dispatch) => {
   dispatch({ type: CREATE_SESSION_REQUEST });
@@ -37,29 +66,6 @@ const createSession = (session) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CREATE_SESSION_FAILED,
-      error: error.response.data.message,
-    });
-  }
-};
-
-
-const addVehicleDetails = (vehicle) => async (dispatch) => {
-  dispatch({ type: VEHICLE_ADD_REQUEST });
-  try {
-    const token = localStorage.getItem("token");
-
-    const { data } = await Axios.post(
-      `${api}/api/session/vehicle-details`,
-      vehicle,
-      {
-        headers: { "x-auth-token": token },
-      }
-    );
-
-    dispatch({ type: VEHICLE_ADD_SUCCESS, vehicle: data.vehicle });
-  } catch (error) {
-    dispatch({
-      type: VEHICLE_ADD_FAILED,
       error: error.response.data.message,
     });
   }
@@ -95,27 +101,19 @@ const getVehicleMake = () => async (dispatch) => {
   }
 };
 
-const loadAllSessions = (empId) => async (dispatch) => {
+const loadAllSessions = (empId, count, key, state, searchby) => async (dispatch) => {
   if (empId) {
     dispatch({ type: ALL_SESSION_REQUEST });
     const token = localStorage.getItem("token");
     try {
       const { data } = await Axios.post(
-        `${api}/api/session/all/`,
+        `${api}/api/session/all?count=${count}&key=${key}&state=${state}&key=${key}&searchby=${searchby}`,
         { empid: empId },
         {
           headers: { "x-auth-token": token },
         }
       );
       dispatch({ type: ALL_SESSION_SUCCESS, sessions: data.sessions });
-
-      // let session = {};
-      // let filtered_sessions = data.sessions.filter(
-      //   (session) => session.state === "ongoing"
-      // );
-      // session = { ...filtered_sessions[0] };
-
-      // dispatch({ type: CREATE_SESSION_SUCCESS, session });
     } catch (error) {
       dispatch({
         type: ALL_SESSION_FAILED,
@@ -180,6 +178,8 @@ export {
   loadAllSessions,
   updateSessionState,
   getVehicleMake,
-  addVehicleDetails,
   pauseSession,
+  changeSessionCount,
+  changeSessionKeyword,
+  changeSessionState,changeSessionSearchBy
 };

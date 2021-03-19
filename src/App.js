@@ -15,18 +15,24 @@ import { loadAllSessions } from "./_actions";
 import AuthenticateLogin from "./pages/AuthenticateLogin";
 import FinalSessionStep from "./pages/FinalSessionStep";
 import Upload from "./pages/Upload";
+import EmployeeProfile from "./pages/EmployeeProfile";
 // import SessionHome from "./pages/session/SessionHome";
 
 function App() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.userReducer);
+  const { sessionsCount, keyword, state, searchby } = useSelector(
+    (state) => state.sessionReducer
+  );
   useEffect(() => {
     dispatch(getProfileFetch());
   }, []);
 
   useEffect(() => {
     if (user._id) {
-      dispatch(loadAllSessions(user.idnumber));
+      dispatch(
+        loadAllSessions(user.idnumber, sessionsCount, keyword, state, searchby)
+      );
     }
   }, [user]);
 
@@ -39,6 +45,7 @@ function App() {
           </AuthenticateLogin>
         </Route>
         <Route path="/login" component={Login} />
+        <Route path="/profile" component={EmployeeProfile} />
         <Route path="/sessions" component={Sessions} />
         <Route path="/session/:sessionid" component={Session} />
         <Route path="/sessionend" component={FinalSessionStep} />

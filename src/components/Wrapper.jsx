@@ -14,7 +14,7 @@ const Wrapper = ({children}) => {
         <Container>
           <Row>
             <Sidebar/>
-            <Col md={9} className="main-container">
+            <Col md={9} style={{minWidth:"600px"}} className="main-container">
               {children}
             </Col>
           </Row>

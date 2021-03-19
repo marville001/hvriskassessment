@@ -9,7 +9,7 @@ const Sidebar = () => {
       <hr/>
       <SidebarItem href="/">Dashboard</SidebarItem>
       <SidebarItem href="/sessions">Sessions</SidebarItem>
-      <SidebarItem href="/">Profile</SidebarItem>
+      <SidebarItem href="/profile">Profile</SidebarItem>
     </Col>
   );
 };
