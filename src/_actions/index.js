@@ -5,8 +5,6 @@ export {
   getCurrentSession,
   loadAllSessions,
   updateSessionState,
-  addCallerDetails,
-  addRPartyDetails,
   getVehicleMake,
   addVehicleDetails,
   pauseSession,
@@ -58,3 +56,9 @@ export {
   addAdmin,
   addEmployee,
 } from "./adminActions";
+
+export { getCaller, addCaller, updateCaller } from "./callerActions";
+
+export { addRParty, getRParty, updateRParty } from "./rPartyActions";
+
+export { addVehicle, getVehicle, updateVehicle } from "./vehicleActions";

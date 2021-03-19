@@ -75,30 +75,9 @@ const HazardAssessment = ({ sessionId,activeStep,setActiveStep,changeSessionStat
             what={hazard.anysmell}
           />
 
-          {/* Question 6
-          <div className="item_container">
-            <div className="q_container">
-              <div className="q_num">{6}</div>
-              <div className="q_text">
-                Do you smell anything that would indicate electrical burning{" "}
-                <span>?</span>
-              </div>
-              <div className="q_buttons">
-                <Button className="q_button" onClick={() => {}}>
-                  YES
-                </Button>
-                <Button className="q_button" onClick={() => {}}>
-                  NO
-                </Button>
-              </div>
-            </div>
-            <p className="q_add_note text-primary">
-              <span>+</span> Add Note
-            </p>
-          </div> */}
 
           <div className="d-flex-center py-5">
-            <Button onClick={()=>changeSessionState(activeStep + 1, "ongoing")} variant="success">Next</Button>
+            <Button onClick={()=>changeSessionState(5, "ongoing")} variant="success">Next</Button>
           </div>
         </Container>
       ) : null}

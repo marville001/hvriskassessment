@@ -1,11 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React from "react";
 import { Button, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import HazardQuestion from "../HazardQuestion";
 
 import {
-  getHVdamage,
   changeBatteryDamaged,
   changeLeakingFluid,
   changeOdor,
@@ -54,10 +53,6 @@ const HVDamageAssessment = ({
   const endSession = () => {
     sendEmail();
   };
-
-  useEffect(() => {
-    dispatch(getHVdamage(sessionId));
-  }, []);
   return (
     <div>
       <h3 className="text-center p-2">HV Damage Assessment</h3>

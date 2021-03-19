@@ -15,6 +15,7 @@ import { loadAllSessions } from "./_actions";
 import AuthenticateLogin from "./pages/AuthenticateLogin";
 import FinalSessionStep from "./pages/FinalSessionStep";
 import Upload from "./pages/Upload";
+// import SessionHome from "./pages/session/SessionHome";
 
 function App() {
   const dispatch = useDispatch();

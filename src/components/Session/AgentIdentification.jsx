@@ -17,7 +17,7 @@ const AgentIdentification = ({
     } else {
       state = "ongoing";
     }
-    changeSessionState(activeStep + 1, state);
+    changeSessionState(1, state);
   };
 
   return (

@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { addRPartyDetails } from "../../_actions";
+import { addRParty, updateRParty } from "../../_actions";
 const ResponsibleParty = (props) => {
   const dispatch = useDispatch();
-  const { rpartyererror } = useSelector((state) => state.sessionReducer);
+  const { rparty, adderror } = useSelector((state) => state.rpartyReducer);
   const {
-    activeStep,
     rpname,
     rpnumber,
     policy,
@@ -24,12 +24,21 @@ const ResponsibleParty = (props) => {
     sessionId,
   } = props;
 
-  const [inputError, setInputError] = useState("");
+  useEffect(() => {
+    if (rparty._id) {
+      setRPName(rparty.name);
+      setRPNumber(rparty.number);
+      setPolicy(rparty.policy);
+      setCNumber(rparty.claim_number);
+      setRPAddress(rparty.address);
+      setIProvider(rparty.insuranceprovider);
+    }
+  }, [rparty]);
 
   const formSubmit = (e) => {
     e.preventDefault();
 
-    const rparty = {
+    const rp = {
       name: rpname,
       number: rpnumber,
       sessionid: sessionId,
@@ -38,34 +47,28 @@ const ResponsibleParty = (props) => {
       address: rpaddress,
       insuranceprovider: insprovider,
     };
-
-    if (
-      rpname === "" ||
-      rpnumber === "" ||
-      policy === "" ||
-      rpaddress === "" ||
-      cNumber === "" ||
-      insprovider === ""
-    ) {
-      setInputError("All fields are required");
-    } else {
-      dispatch(addRPartyDetails(rparty));
-
-      changeSessionState(activeStep + 1, "ongoing");
-    }
+    dispatch(addRParty(rp));
+    changeSessionState(3, "ongoing");
+  };
+  const rpartyUpdate = () => {
+    const rp = {
+      name: rpname,
+      number: rpnumber,
+      sessionid: sessionId,
+      policy,
+      claim_number: cNumber,
+      address: rpaddress,
+      insuranceprovider: insprovider,
+    };
+    dispatch(updateRParty(rp, rparty._id));
   };
   return (
     <Container fluid>
       <h5 className="text-center p-2">Responsible Party Information</h5>
       <Row style={{ display: "flex", justifyContent: "center" }}>
-        <Col md={12} lg={8}>
-          <Form autoComplete={false} onSubmit={formSubmit}>
-            {inputError && (
-              <p className="text-center text-danger">{inputError}</p>
-            )}
-            {rpartyererror && (
-              <p className="text-center text-danger">{rpartyererror}</p>
-            )}
+        <Col md={12} lg={12}>
+          <Form autoComplete={false}>
+            {adderror && <p className="text-center text-danger">{adderror}</p>}
             <Row>
               <Col xs={12} md={6} lg={6}>
                 <Form.Group>
@@ -135,14 +138,26 @@ const ResponsibleParty = (props) => {
               </Col>
               <Col xs={12} md={6} lg={6}>
                 <Form.Group>
-                  <Button
-                    className="btn-block"
-                    // style={{ width: "150px" }}
-                    variant="primary"
-                    type="submit"
-                  >
-                    Continue
-                  </Button>
+                  {!rparty._id ? (
+                    <Button
+                      className="btn-block"
+                      // style={{ width: "150px" }}
+                      onClick={formSubmit}
+                      variant="primary"
+                      type="submit"
+                    >
+                      Continue
+                    </Button>
+                  ) : (
+                    <Button
+                      className="btn-block"
+                      onClick={rpartyUpdate}
+                      variant="primary"
+                      type="button"
+                    >
+                      Update
+                    </Button>
+                  )}
                 </Form.Group>
               </Col>
             </Row>

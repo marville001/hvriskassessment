@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Accordion,
   Button,
   Card,
-  Col,
   Container,
   Form,
   Row,
@@ -12,17 +11,17 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import {
   changePosition,
-  getVdamage,
   changeDamaged,
   changeWhichAirBag,
   changeAirBagDeploys,
   changeVOnFire,
   changeSubmerged,
+  changeSeverity,
   changeBAreaFlooded,
   changeAnyPartOfHvExposed,
 } from "../../_actions";
 
-const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSessionState }) => {
+const VehicleDamageAssessment = ({ sessionId, changeSessionState }) => {
   const { vdamage } = useSelector((state) => state.vDamageReducer);
   const dispatch = useDispatch();
 
@@ -31,17 +30,13 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
     airbagdeploys,
     anypartofhvexposed,
     bareaflooded,
-    // damaged,
+    damaged,
     // notes,
     onfire,
-    // position,
+    position,
     submerged,
     // whichairbag,
   } = vdamage;
-  console.log(vdamage);
-  useEffect(() => {
-    dispatch(getVdamage(sessionId));
-  }, []);
   return (
     <div>
       <h3 className="text-center p-2">Vehicle Damage Assessment</h3>
@@ -60,7 +55,7 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                   }
                   as="select"
                   custom
-                  defaultValue="Choose..."
+                  defaultValue={position ? position : "Choose..."}
                 >
                   <option>Choose...</option>
                   <option>Upright</option>
@@ -84,7 +79,7 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                   }
                   as="select"
                   custom
-                  defaultValue="Choose..."
+                  defaultValue={damaged ? damaged : "Choose..."}
                 >
                   <option>Choose...</option>
                   <option>Front</option>
@@ -104,27 +99,46 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                 <Form.Label className="q_text" as="legend" column sm={12}>
                   Please Rate the Severity of the Damage
                 </Form.Label>
-                <Col sm={10}>
+                <Row style={{ padding: "15px 30px" }}>
                   <Form.Check
-                    onChange={(e) => console.log(e.target.value)}
+                    onClick={(e) =>
+                      dispatch(
+                        changeSeverity({ id: _id, state: e.target.value })
+                      )
+                    }
                     type="radio"
+                    value={"Light"}
                     label="Light"
-                    name="formHorizontalRadios"
-                    id="formHorizontalRadios1"
+                    name="severityRadio"
+                    id="severityRadioLight"
+                    style={{ marginRight: "15px" }}
                   />
                   <Form.Check
                     type="radio"
+                    onClick={(e) =>
+                      dispatch(
+                        changeSeverity({ id: _id, state: e.target.value })
+                      )
+                    }
                     label="Moderate"
-                    name="formHorizontalRadios"
-                    id="formHorizontalRadios2"
+                    value={"Moderate"}
+                    name="severityRadio"
+                    id="severityRadioModerate"
+                    style={{ marginRight: "15px" }}
                   />
                   <Form.Check
+                    onClick={(e) =>
+                      dispatch(
+                        changeSeverity({ id: _id, state: e.target.value })
+                      )
+                    }
                     type="radio"
+                    value={"Heavy"}
                     label="Heavy"
-                    name="formHorizontalRadios"
-                    id="formHorizontalRadios3"
+                    name="severityRadio"
+                    id="severityRadioHeavy"
                   />
-                </Col>
+                </Row>
               </Form.Group>
             </div>
             <p className="q_add_note text-primary">
@@ -269,11 +283,7 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                     <Accordion.Toggle as={Button} variant="link" eventKey="1">
                       <Button
                         disabled={
-                          submerged === null
-                            ? false
-                            : submerged
-                            ? true
-                            : false
+                          submerged === null ? false : submerged ? true : false
                         }
                         style={{
                           backgroundColor:
@@ -305,11 +315,7 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
                     <Accordion.Toggle as={Button} variant="link" eventKey="0">
                       <Button
                         disabled={
-                          submerged === null
-                            ? false
-                            : !submerged
-                            ? true
-                            : false
+                          submerged === null ? false : !submerged ? true : false
                         }
                         style={{
                           backgroundColor:
@@ -590,7 +596,7 @@ const VehicleDamageAssessment = ({ sessionId, activeStep, setActiveStep,changeSe
 
           <div className="d-flex-center py-5">
             <Button
-              onClick={() => changeSessionState(activeStep + 1, "ongoing")}
+              onClick={() => changeSessionState(6, "ongoing")}
               variant="success"
             >
               Next

@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { addVehicleDetails } from "../../_actions";
+import { addVehicle, updateVehicle } from "../../_actions";
 const VehicleIdentification = (props) => {
   const dispatch = useDispatch();
-  const { vehicleerror, makes } = useSelector((state) => state.sessionReducer);
+  const { makes } = useSelector((state) => state.sessionReducer);
+  const { vehicle } = useSelector((state) => state.vehicleReducer);
 
-  const [inputError, setInputError] = useState("");
   const {
-    activeStep,
     changeSessionState,
     sessionId,
     make,
@@ -25,10 +25,22 @@ const VehicleIdentification = (props) => {
     setLPState,
     setLicence,
   } = props;
+
+  useEffect(() => {
+    if (vehicle._id) {
+      setMake(vehicle.make);
+      setModel(vehicle.model);
+      setYear(vehicle.year);
+      setVin(vehicle.vin);
+      setLPState(vehicle.licence);
+      setLicence(vehicle.lpstate);
+    }
+  }, [vehicle]);
+
   const formSubmit = (e) => {
     e.preventDefault();
 
-    const vehicle = {
+    const v = {
       vin,
       model,
       sessionid: sessionId,
@@ -38,38 +50,33 @@ const VehicleIdentification = (props) => {
       year,
     };
 
-    if (
-      vin === "" ||
-      model === "" ||
-      licence === "" ||
-      make === "" ||
-      lpstate === "" ||
-      year === ""
-    ) {
-      setInputError("All fields are required");
-    } else {
-      dispatch(addVehicleDetails(vehicle));
+    dispatch(addVehicle(v));
+    changeSessionState(4, "ongoing");
+  };
 
-      changeSessionState(activeStep + 1, "ongoing");
-    }
+  const vehicleUpdate = () => {
+    const v = {
+      vin,
+      model,
+      sessionid: sessionId,
+      licence,
+      lpstate,
+      make,
+      year,
+    };
+    dispatch(updateVehicle(v, vehicle._id));
   };
 
   const makeChange = (e) => {
     const m = e.target.value;
     setMake(m);
   };
-  
+
   return (
     <Container fluid>
       <h4 className="text-center p-2">Vehicle Identification</h4>
       <Row style={{ display: "flex", justifyContent: "center" }}>
         <Col md={12} lg={12}>
-          {inputError && (
-            <p className="text-center text-danger">{inputError}</p>
-          )}
-          {vehicleerror && (
-            <p className="text-center text-danger">{vehicleerror}</p>
-          )}
           <Form autoComplete={false}>
             <Row>
               <Col xs={12} md={6} lg={6}>
@@ -83,7 +90,9 @@ const VehicleIdentification = (props) => {
                     defaultValue="Choose..."
                   >
                     <option></option>
-                    {makes.map((make,i)=>(<option id={i}>{make}</option>))}
+                    {makes.map((make, i) => (
+                      <option id={i}>{make}</option>
+                    ))}
                   </Form.Control>
                 </Form.Group>
               </Col>
@@ -144,15 +153,26 @@ const VehicleIdentification = (props) => {
               </Col>
               <Col xs={12} md={6} lg={6}>
                 <Form.Group>
-                  <Button
-                    className="btn-block"
-                    // style={{ width: "150px" }}
-                    onClick={formSubmit}
-                    variant="primary"
-                    type="submit"
-                  >
-                    Continue
-                  </Button>
+                  {!vehicle._id ? (
+                    <Button
+                      className="btn-block"
+                      // style={{ width: "150px" }}
+                      onClick={formSubmit}
+                      variant="primary"
+                      type="submit"
+                    >
+                      Continue
+                    </Button>
+                  ) : (
+                    <Button
+                      className="btn-block"
+                      onClick={vehicleUpdate}
+                      variant="primary"
+                      type="button"
+                    >
+                      Update
+                    </Button>
+                  )}
                 </Form.Group>
               </Col>
             </Row>

@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import {
   CHANGE_HAZARD_FAILED,
   CHANGE_HAZARD_REQUEST,
@@ -19,9 +20,6 @@ const getHazard = (sessionId) => async (dispatch) => {
         headers: { "x-auth-token": token },
       }
     );
-
-    console.log(data.hazard);
-
     dispatch({ type: CHANGE_HAZARD_SUCCESS, hazard: data.hazard });
   } catch (error) {
     dispatch({

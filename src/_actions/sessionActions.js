@@ -11,12 +11,6 @@ import {
   UPDATE_SESSION_REQUEST,
   UPDATE_SESSION_SUCCESS,
   UPDATE_SESSION_FAILED,
-  CALLER_ADD_REQUEST,
-  CALLER_ADD_SUCCESS,
-  CALLER_ADD_FAILED,
-  RPARTY_ADD_REQUEST,
-  RPARTY_ADD_SUCCESS,
-  RPARTY_ADD_FAILED,
   VEHICLE_ADD_REQUEST,
   VEHICLE_ADD_SUCCESS,
   VEHICLE_ADD_FAILED,
@@ -48,49 +42,6 @@ const createSession = (session) => async (dispatch) => {
   }
 };
 
-const addCallerDetails = (caller) => async (dispatch) => {
-  dispatch({ type: CALLER_ADD_REQUEST });
-  try {
-    const token = localStorage.getItem("token");
-
-    const { data } = await Axios.post(
-      `${api}/api/session/caller-details`,
-      caller,
-      {
-        headers: { "x-auth-token": token },
-      }
-    );
-
-    dispatch({ type: CALLER_ADD_SUCCESS, caller: data.caller });
-  } catch (error) {
-    dispatch({
-      type: CALLER_ADD_FAILED,
-      error: error.response.data.message,
-    });
-  }
-};
-
-const addRPartyDetails = (rparty) => async (dispatch) => {
-  dispatch({ type: RPARTY_ADD_REQUEST });
-  try {
-    const token = localStorage.getItem("token");
-
-    const { data } = await Axios.post(
-      `${api}/api/session/rparty-details`,
-      rparty,
-      {
-        headers: { "x-auth-token": token },
-      }
-    );
-
-    dispatch({ type: RPARTY_ADD_SUCCESS, rparty: data.rparty });
-  } catch (error) {
-    dispatch({
-      type: RPARTY_ADD_FAILED,
-      error: error.response.data.message,
-    });
-  }
-};
 
 const addVehicleDetails = (vehicle) => async (dispatch) => {
   dispatch({ type: VEHICLE_ADD_REQUEST });
@@ -228,8 +179,6 @@ export {
   getCurrentSession,
   loadAllSessions,
   updateSessionState,
-  addCallerDetails,
-  addRPartyDetails,
   getVehicleMake,
   addVehicleDetails,
   pauseSession,

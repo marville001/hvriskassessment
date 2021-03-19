@@ -1,11 +1,19 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { addCallerDetails } from "../../_actions";
+import { addCaller, updateCaller } from "../../_actions";
 
 const CallerIdentification = (props) => {
   const {
-    activeStep,
+    number,
+    name,
+    email,
+    sup,
+    oa,
+    on,
+    loc,
+    org,
     setName,
     setNumber,
     setEmail,
@@ -14,22 +22,30 @@ const CallerIdentification = (props) => {
     setONumber,
     setLocation,
     setOrganization,
-    number,
-    name,
-    email,
-    sup,
-    oa,
-    on,
-    loc,
-    org,sessionId,
-    changeSessionState
+    sessionId,
+    changeSessionState,
   } = props;
   const dispatch = useDispatch();
   const { callererror } = useSelector((state) => state.sessionReducer);
+  const { caller } = useSelector((state) => state.callerReducer);
+
+  useEffect(() => {
+    if (caller._id) {
+      setName(caller.name);
+      setNumber(caller.number);
+      setEmail(caller.email);
+      setSupervisor(caller.supervisor);
+      setOrganization(caller.organization);
+      setOAddress(caller.organization_address);
+      setONumber(caller.organization_number);
+      setLocation(caller.location);
+    }
+  }, [caller]);
+
   const formSubmit = (e) => {
     e.preventDefault();
 
-    const caller = {
+    const c = {
       name,
       sessionid: sessionId,
       number,
@@ -41,16 +57,32 @@ const CallerIdentification = (props) => {
       organization: org,
     };
 
-    dispatch(addCallerDetails(caller));
+    dispatch(addCaller(c));
 
-    changeSessionState(activeStep + 1, "ongoing");
+    changeSessionState(2, "ongoing");
+  };
+
+  const callerUpdate = () => {
+    const c = {
+      name,
+      sessionid: sessionId,
+      number,
+      email,
+      supervisor: sup,
+      organization_address: oa,
+      organization_number: on,
+      location: loc,
+      organization: org,
+    };
+
+    dispatch(updateCaller(c, caller._id));
   };
   return (
     <Container fluid>
       <h5 className="text-center p-2">Caller Details</h5>
       <Row style={{ display: "flex", justifyContent: "center" }}>
-        <Col md={12} lg={8}>
-          <Form autoComplete={false} onSubmit={formSubmit}>
+        <Col md={12} lg={12}>
+          <Form autoComplete={false}>
             {callererror && (
               <p className="text-center text-danger">{callererror}</p>
             )}
@@ -147,15 +179,25 @@ const CallerIdentification = (props) => {
               </Col>
               <Col xs={12} md={6} lg={6}>
                 <Form.Group>
-                  <Button
-                    className="btn-block"
-                    // style={{ width: "150px" }}
-                    
-                    variant="primary"
-                    type="submit"
-                  >
-                    Continue
-                  </Button>
+                  {!caller._id ? (
+                    <Button
+                      className="btn-block"
+                      onClick={formSubmit}
+                      variant="primary"
+                      type="submit"
+                    >
+                      Continue
+                    </Button>
+                  ) : (
+                    <Button
+                      className="btn-block"
+                      onClick={callerUpdate}
+                      variant="primary"
+                      type="button"
+                    >
+                      Update
+                    </Button>
+                  )}
                 </Form.Group>
               </Col>
             </Row>

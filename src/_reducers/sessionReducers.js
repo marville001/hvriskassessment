@@ -11,12 +11,6 @@ import {
   UPDATE_SESSION_REQUEST,
   UPDATE_SESSION_SUCCESS,
   UPDATE_SESSION_FAILED,
-  CALLER_ADD_REQUEST,
-  CALLER_ADD_SUCCESS,
-  CALLER_ADD_FAILED,
-  RPARTY_ADD_REQUEST,
-  RPARTY_ADD_SUCCESS,
-  RPARTY_ADD_FAILED,
   VEHICLE_ADD_REQUEST,
   VEHICLE_ADD_SUCCESS,
   VEHICLE_ADD_FAILED,
@@ -50,30 +44,6 @@ const sessionReducer = (
       return { ...state, loading: false, session: action.session, error: "" };
     case UPDATE_SESSION_FAILED:
       return { ...state, loading: false, error: action.error };
-
-    case CALLER_ADD_REQUEST:
-      return { ...state, loading: true };
-    case CALLER_ADD_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        caller: action.caller,
-        callererror: "",
-      };
-    case CALLER_ADD_FAILED:
-      return { ...state, loading: false, callererror: action.error };
-
-    case RPARTY_ADD_REQUEST:
-      return { ...state, loading: true };
-    case RPARTY_ADD_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        rparty: action.rparty,
-        rpartyerror: "",
-      };
-    case RPARTY_ADD_FAILED:
-      return { ...state, loading: false, rpartyerror: action.error };
 
     case VEHICLE_ADD_REQUEST:
       return { ...state, loading: true };

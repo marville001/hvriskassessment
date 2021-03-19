@@ -5,11 +5,7 @@ import {
   CHANGE_VDAMAGE_SUCCESS,
 } from "../constants/vDamageConstants";
 
-// Online db
-// const api = "https://hvriskassessment.herokuapp.com";
-
-// offline db
-const api = "http://localhost:5005";
+import api from "./values";
 
 const getVdamage = (sessionId) => async (dispatch) => {
   dispatch({ type: CHANGE_VDAMAGE_REQUEST });
@@ -26,6 +22,7 @@ const getVdamage = (sessionId) => async (dispatch) => {
 
     dispatch({ type: CHANGE_VDAMAGE_SUCCESS, vdamage: data.vdamage });
   } catch (error) {
+    console.log(error);
     dispatch({
       type: CHANGE_VDAMAGE_FAILED,
       error: error.response.data.message,
@@ -243,5 +240,5 @@ export {
   changeSeverity,
   changeAirBagDeploys,
   changeWhichAirBag,
-  changeAnyPartOfHvExposed
+  changeAnyPartOfHvExposed,
 };
