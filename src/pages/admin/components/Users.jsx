@@ -67,8 +67,8 @@ const Users = () => {
 
   return (
     <div>
+      <Container style={{ padding: "20px 0px 0px" }}>
       {/* Admins */}
-      <Container style={{ padding: "100px 0px 0px" }}>
         <Row
           style={{ padding: "10px 20px 10px 0px" }}
           className="justify-content-between"
@@ -83,7 +83,7 @@ const Users = () => {
           <Col>
             <Card>
               <Card.Body>
-                <Table striped bordered hover>
+                <Table striped bordered hover size="sm">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -180,7 +180,7 @@ const Users = () => {
           <Col>
             <Card>
               <Card.Body>
-                <Table striped bordered hover>
+                <Table striped bordered hover size="sm">
                   <thead>
                     <tr>
                       <th>#</th>

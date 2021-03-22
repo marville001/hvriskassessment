@@ -5,7 +5,7 @@ import {
   CHANGE_HVDAMAGE_SUCCESS,
 } from "../constants/hvDamageConstants";
 
-import api from './values'
+import api from "./values";
 
 const getHVdamage = (sessionId) => async (dispatch) => {
   dispatch({ type: CHANGE_HVDAMAGE_REQUEST });
@@ -22,7 +22,6 @@ const getHVdamage = (sessionId) => async (dispatch) => {
     );
 
     dispatch({ type: CHANGE_HVDAMAGE_SUCCESS, hvdamage: data.hvdamage });
-
   } catch (error) {
     dispatch({
       type: CHANGE_HVDAMAGE_FAILED,
@@ -209,6 +208,28 @@ const changeCableDamage = (cabledamage) => async (dispatch) => {
   }
 };
 
+const changehvDamageLevel = (level) => async (dispatch) => {
+  const { id, state } = level;
+  dispatch({ type: CHANGE_HVDAMAGE_REQUEST });
+  try {
+    const token = localStorage.getItem("token");
+
+    const { data } = await axios.put(
+      `${api}/api/hvdamage/level`,
+      { id, level: state },
+      {
+        headers: { "x-auth-token": token },
+      }
+    );
+    dispatch({ type: CHANGE_HVDAMAGE_SUCCESS, hvdamage: data.hvdamage });
+  } catch (error) {
+    dispatch({
+      type: CHANGE_HVDAMAGE_FAILED,
+      error: error.response.data.message,
+    });
+  }
+};
+
 export {
   getHVdamage,
   changeBatteryDamaged,
@@ -218,5 +239,6 @@ export {
   changeBCompDamaged,
   changeBatterySeparated,
   changeElectricalDamage,
-  changeCableDamage
+  changeCableDamage,
+  changehvDamageLevel,
 };

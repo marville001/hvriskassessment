@@ -6,7 +6,7 @@ import {
   CHANGE_HAZARD_SUCCESS,
 } from "../constants/hazardConstants";
 
-import api from './values'
+import api from "./values";
 
 const getHazard = (sessionId) => async (dispatch) => {
   dispatch({ type: CHANGE_HAZARD_REQUEST });
@@ -35,9 +35,13 @@ const changeOnfire = (onfire) => async (dispatch) => {
   try {
     const token = localStorage.getItem("token");
 
-    const { data } = await axios.put(`${api}/api/hazard/onfire`, {id, onfire:state}, {
-      headers: { "x-auth-token": token },
-    });
+    const { data } = await axios.put(
+      `${api}/api/hazard/onfire`,
+      { id, onfire: state },
+      {
+        headers: { "x-auth-token": token },
+      }
+    );
 
     dispatch({ type: CHANGE_HAZARD_SUCCESS, hazard: data.hazard });
   } catch (error) {
@@ -54,9 +58,13 @@ const changeSmoking = (smoking) => async (dispatch) => {
   try {
     const token = localStorage.getItem("token");
 
-    const { data } = await axios.put(`${api}/api/hazard/smoking`, {id, smoking:state}, {
-      headers: { "x-auth-token": token },
-    });
+    const { data } = await axios.put(
+      `${api}/api/hazard/smoking`,
+      { id, smoking: state },
+      {
+        headers: { "x-auth-token": token },
+      }
+    );
     dispatch({ type: CHANGE_HAZARD_SUCCESS, hazard: data.hazard });
   } catch (error) {
     dispatch({
@@ -72,9 +80,13 @@ const changeSound = (anysound) => async (dispatch) => {
   try {
     const token = localStorage.getItem("token");
 
-    const { data } = await axios.put(`${api}/api/hazard/anysound`, {id, anysound: state}, {
-      headers: { "x-auth-token": token },
-    });
+    const { data } = await axios.put(
+      `${api}/api/hazard/anysound`,
+      { id, anysound: state },
+      {
+        headers: { "x-auth-token": token },
+      }
+    );
     dispatch({ type: CHANGE_HAZARD_SUCCESS, hazard: data.hazard });
   } catch (error) {
     dispatch({
@@ -107,14 +119,14 @@ const changeSmell = (anysmell) => async (dispatch) => {
 };
 
 const changeElectricShutdown = (electricshutdown) => async (dispatch) => {
-  const { id, state } = electricshutdown
+  const { id, state } = electricshutdown;
   dispatch({ type: CHANGE_HAZARD_REQUEST });
   try {
     const token = localStorage.getItem("token");
 
     const { data } = await axios.put(
       `${api}/api/hazard/electricshutdown`,
-      {id, electricshutdown: state},
+      { id, electricshutdown: state },
       {
         headers: { "x-auth-token": token },
       }
@@ -146,6 +158,23 @@ const changeShutdown = (shutdown) => async (dispatch) => {
   }
 };
 
+const changeLevel = (level) => async (dispatch) => {
+  dispatch({ type: CHANGE_HAZARD_REQUEST });
+  try {
+    const token = localStorage.getItem("token");
+
+    const { data } = await axios.put(`${api}/api/hazard/level`, level, {
+      headers: { "x-auth-token": token },
+    });
+    dispatch({ type: CHANGE_HAZARD_SUCCESS, hazard: data.hazard });
+  } catch (error) {
+    dispatch({
+      type: CHANGE_HAZARD_FAILED,
+      error: error.response.data.message,
+    });
+  }
+};
+
 export {
   getHazard,
   changeOnfire,
@@ -154,4 +183,5 @@ export {
   changeSound,
   changeElectricShutdown,
   changeShutdown,
+  changeLevel,
 };

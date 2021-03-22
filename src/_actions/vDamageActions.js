@@ -230,6 +230,28 @@ const changeAnyPartOfHvExposed = (anypartofhvexposed) => async (dispatch) => {
   }
 };
 
+const changeVDamageLevel = (level) => async (dispatch) => {
+  const { id, state } = level;
+  dispatch({ type: CHANGE_VDAMAGE_REQUEST });
+  try {
+    const token = localStorage.getItem("token");
+
+    const { data } = await axios.put(
+      `${api}/api/vdamage/level`,
+      { id, level: state },
+      {
+        headers: { "x-auth-token": token },
+      }
+    );
+    dispatch({ type: CHANGE_VDAMAGE_SUCCESS, vdamage: data.vdamage });
+  } catch (error) {
+    dispatch({
+      type: CHANGE_VDAMAGE_FAILED,
+      error: error.response.data.message,
+    });
+  }
+};
+
 export {
   getVdamage,
   changePosition,
@@ -241,4 +263,5 @@ export {
   changeAirBagDeploys,
   changeWhichAirBag,
   changeAnyPartOfHvExposed,
+  changeVDamageLevel,
 };

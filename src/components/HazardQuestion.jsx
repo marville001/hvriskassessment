@@ -1,10 +1,28 @@
 import React, { useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
+import { pauseSession } from "../_actions/sessionActions";
 
-const HazardQuestion = ({ quiz, question, what, _id, dispatch, action }) => {
-
+const HazardQuestion = ({
+  quiz,
+  question,
+  sessionId,
+  what,
+  _id,
+  dispatch,
+  action,
+  pause,
+}) => {
   const [noteOpen, setNoteOpen] = useState(false);
   const [note, setNote] = useState("");
+
+  const yesClick = () => {
+    if (pause) {
+      dispatch(action({ id: _id, state: true }));
+      dispatch(pauseSession({ sessionId }));
+    } else {
+      dispatch(action({ id: _id, state: true }));
+    }
+  };
 
   return (
     <div className="item_container">
@@ -22,7 +40,7 @@ const HazardQuestion = ({ quiz, question, what, _id, dispatch, action }) => {
                 what === null ? false : what ? "#007bff" : "#fff",
               color: what === null ? false : what ? "#fff" : "#007bff",
             }}
-            onClick={() => dispatch(action({ id: _id, state: true }))}
+            onClick={yesClick}
           >
             YES
           </Button>
@@ -42,7 +60,9 @@ const HazardQuestion = ({ quiz, question, what, _id, dispatch, action }) => {
       </div>
       <p
         onClick={() => setNoteOpen(true)}
-        style={{ display: what === null? "none" : noteOpen ? "none" : "block"}}
+        style={{
+          display: what === null ? "none" : noteOpen ? "none" : "block",
+        }}
         className="q_add_note text-primary"
       >
         <span>+</span> Add Note

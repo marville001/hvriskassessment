@@ -21,6 +21,7 @@ export {
   changeSound,
   changeElectricShutdown,
   changeShutdown,
+  changeLevel,
 } from "./hazardActions";
 
 export {
@@ -34,6 +35,7 @@ export {
   changeAirBagDeploys,
   changeWhichAirBag,
   changeAnyPartOfHvExposed,
+  changeVDamageLevel,
 } from "./vDamageActions";
 
 export {
@@ -46,6 +48,7 @@ export {
   changeBatterySeparated,
   changeElectricalDamage,
   changeCableDamage,
+  changehvDamageLevel,
 } from "./hvDamageActions";
 
 export {

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
-import { Button,  Container, Form, Row } from "react-bootstrap";
+import { Button, Container, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changePosition,
@@ -12,6 +12,7 @@ import {
   changeSeverity,
   changeBAreaFlooded,
   changeAnyPartOfHvExposed,
+  changeVDamageLevel,
 } from "../../_actions";
 
 const VehicleDamageAssessment = ({ sessionId, changeSessionState }) => {
@@ -32,7 +33,19 @@ const VehicleDamageAssessment = ({ sessionId, changeSessionState }) => {
   } = vdamage;
   return (
     <div>
-      <h3 className="text-center p-2">Vehicle Damage Assessment</h3>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-evenly",
+          alignItems: "center",
+        }}
+      >
+        <h3 className="text-center p-2">Vehicle Damage Assessment</h3>
+        <h5>
+          Level :{" "}
+          <span style={{ color: vdamage.level, fontWeight: "bolder",textTransform:"uppercase" }}>{vdamage.level}</span>
+        </h5>
+      </div>
       {vdamage ? (
         <Container fluid className="si_container">
           <div className="item_container">
@@ -134,9 +147,6 @@ const VehicleDamageAssessment = ({ sessionId, changeSessionState }) => {
                 </Row>
               </Form.Group>
             </div>
-            <p className="q_add_note text-primary">
-              <span>+</span> Add Note
-            </p>
           </div>
 
           <div className="item_container">
@@ -169,14 +179,15 @@ const VehicleDamageAssessment = ({ sessionId, changeSessionState }) => {
                         ? "#fff"
                         : "#007bff",
                   }}
-                  onClick={() =>
+                  onClick={() => {
                     dispatch(
                       changeAirBagDeploys({
                         id: _id,
                         state: true,
                       })
-                    )
-                  }
+                    );
+                    dispatch(changeVDamageLevel({ id: _id, state: "orange" }));
+                  }}
                 >
                   YES
                 </Button>
@@ -216,6 +227,7 @@ const VehicleDamageAssessment = ({ sessionId, changeSessionState }) => {
                         state: null,
                       })
                     );
+                    dispatch(changeVDamageLevel({ id: _id, state: "green" }));
                   }}
                 >
                   NO
@@ -362,14 +374,15 @@ const VehicleDamageAssessment = ({ sessionId, changeSessionState }) => {
                         ? "#fff"
                         : "#007bff",
                   }}
-                  onClick={() =>
+                  onClick={() => {
                     dispatch(
                       changeBAreaFlooded({
                         id: _id,
                         state: true,
                       })
-                    )
-                  }
+                    );
+                    dispatch(changeVDamageLevel({ id: _id, state: "orange" }));
+                  }}
                   className="q_button"
                 >
                   YES
@@ -393,14 +406,15 @@ const VehicleDamageAssessment = ({ sessionId, changeSessionState }) => {
                         : "#007bff",
                   }}
                   className="q_button"
-                  onClick={() =>
+                  onClick={() => {
                     dispatch(
                       changeBAreaFlooded({
                         id: _id,
                         state: false,
                       })
-                    )
-                  }
+                    );
+                    dispatch(changeVDamageLevel({ id: _id, state: "green" }));
+                  }}
                 >
                   NO
                 </Button>
@@ -421,14 +435,15 @@ const VehicleDamageAssessment = ({ sessionId, changeSessionState }) => {
                     onfire === null ? false : onfire ? "#007bff" : "#fff",
                   color: onfire === null ? false : onfire ? "#fff" : "#007bff",
                 }}
-                onClick={() =>
+                onClick={() => {
                   dispatch(
                     changeVOnFire({
                       id: _id,
                       state: true,
                     })
-                  )
-                }
+                  );
+                  dispatch(changeVDamageLevel({ id: _id, state: "orange" }));
+                }}
                 className="q_button"
               >
                 YES
@@ -441,14 +456,15 @@ const VehicleDamageAssessment = ({ sessionId, changeSessionState }) => {
                   color: onfire === null ? false : !onfire ? "#fff" : "#007bff",
                 }}
                 className="q_button"
-                onClick={() =>
+                onClick={() => {
                   dispatch(
                     changeVOnFire({
                       id: _id,
                       state: false,
                     })
-                  )
-                }
+                  );
+                  dispatch(changeVDamageLevel({ id: _id, state: "green" }));
+                }}
               >
                 NO
               </Button>
@@ -487,14 +503,15 @@ const VehicleDamageAssessment = ({ sessionId, changeSessionState }) => {
                         ? "#fff"
                         : "#007bff",
                   }}
-                  onClick={() =>
+                  onClick={() => {
                     dispatch(
                       changeAnyPartOfHvExposed({
                         id: _id,
                         state: true,
                       })
-                    )
-                  }
+                    );
+                    dispatch(changeVDamageLevel({ id: _id, state: "red" }));
+                  }}
                   className="q_button"
                 >
                   YES
@@ -522,14 +539,15 @@ const VehicleDamageAssessment = ({ sessionId, changeSessionState }) => {
                         ? "#fff"
                         : "#007bff",
                   }}
-                  onClick={() =>
+                  onClick={() => {
                     dispatch(
                       changeAnyPartOfHvExposed({
                         id: _id,
                         state: false,
                       })
-                    )
-                  }
+                    );
+                    dispatch(changeVDamageLevel({ id: _id, state: "orange" }));
+                  }}
                 >
                   NO
                 </Button>

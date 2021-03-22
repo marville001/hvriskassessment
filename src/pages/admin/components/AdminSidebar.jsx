@@ -17,12 +17,12 @@ const AdminSidebar = () => {
         <ListGroup.Item action href="/admin/make">
           Make
         </ListGroup.Item>
-        <ListGroup.Item action href="/admin/models">
+        {/* <ListGroup.Item action href="/admin/models">
           Models
         </ListGroup.Item>
         <ListGroup.Item action href="/admin/uploads">
           Uploads
-        </ListGroup.Item>
+        </ListGroup.Item> */}
       </ListGroup>
     </div>
   );

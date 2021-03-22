@@ -13,14 +13,17 @@ import {
   getAllEmployees,
   getAllSessions,
   getLogedInAdmin,
+  getVehicleMake,
 } from "../../_actions";
 import Sessions from "./components/Sessions";
 import AdminSidebar from "./components/AdminSidebar";
+import Make from "./components/Make";
 
 const AdminHome = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(getVehicleMake());
     dispatch(getLogedInAdmin());
     dispatch(getAllAdmins());
     dispatch(getAllEmployees());
@@ -37,6 +40,7 @@ const AdminHome = () => {
             <Route exact path="/admin" component={Dashboard} />
             <Route path="/admin/sessions" component={Sessions} />
             <Route path="/admin/users" component={Users} />
+            <Route path="/admin/make" component={Make} />
             <Route component={NotFound} />
           </Switch>
         </div>
