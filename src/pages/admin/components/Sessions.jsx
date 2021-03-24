@@ -5,16 +5,61 @@ import { ExportCSV } from "../lib/ExportCSV";
 // import { loadtable } from "../lib/loadTable";
 
 const Sessions = () => {
-  const { sessions} = useSelector(
+  const { sessions, callers, employees } = useSelector(
     (state) => state.adminReducer
   );
 
-  const getDate= (string)=>{
+  const getDates = (string) => {
     const date = new Date(string);
-    const datestring = date.getDate() +"-"+(date.getMonth()+1)+ "-"+date.getFullYear()
+    const datestring =
+      date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
 
     return datestring;
-}
+  };
+  const getTime = (string) => {
+    const date = new Date(string);
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+
+    let z = hours < 12 ? "AM" : "PM";
+
+    const timestring = hours + ":" + minutes + ":" + seconds + " " + z;
+
+    return timestring;
+  };
+
+  const getData = () => {
+    const tableRows = [];
+
+    sessions.forEach((session) => {
+      const emp = employees.filter(
+        (e) => e.idnumber === session.employeenumber
+      )[0];
+
+      const cal = callers.filter((c) => c.sessionid === session._id)[0];
+      console.log(cal);
+      const data = [
+        session._id,
+        getDates(session.date),
+        getTime(session.date),
+        session.state,
+        session.employeenumber,
+        emp.name,
+        emp.email,
+        emp.phone,
+        cal?cal.name:"",
+        cal?cal.email:"",
+        cal?cal.number:"",
+      ];
+
+      tableRows.push(data);
+    });
+
+    return tableRows;
+  };
+
+  console.log(getData());
 
   return (
     <Container style={{ padding: "8px" }} fluid>
@@ -27,7 +72,7 @@ const Sessions = () => {
             <Col xs="6">
               <h4>Sessions</h4>
             </Col>
-            <ExportCSV csvData={sessions} fileName={"sessions"}/>
+            <ExportCSV csvData={getData()} fileName={"sessions"} />
             {/* <Button>Export</Button> */}
           </Row>
           <Row>
@@ -37,31 +82,45 @@ const Sessions = () => {
                   <th>#</th>
                   <th>ID</th>
                   <th>DATE</th>
-                  <th>Employee ID</th>
+                  <th>Time</th>
                   <th>State</th>
-                  {/* <th>Caller Name</th>
+                  <th>Agent ID</th>
+                   <th>Agent Name</th>
+                  <th>Agent email</th>
+                  <th>Agent Number</th>
+                  <th>Caller Name</th>
                   <th>Caller email</th>
-                  <th>Hazard Assessment Level</th>
-                  <th>Vehicle Damage Level</th>
-                  <th>Hazard Damage Level</th>
-                  <th>Uploads</th> */}
                 </tr>
               </thead>
               <tbody>
-
-                {sessions.map((s,i)=>(
+                {/* {sessions.map((s, i) => (
                   <tr key={s._id}>
-                      <td>{i+1}</td>
-                      <td>{s._id}</td>
-                      <td>{getDate(s.date)}</td>
-                      <td>{s.employeenumber}</td>
-                      <td>{s.state}</td>
-                      {/* <td>Name</td>
+                    <td>{i + 1}</td>
+                    <td>{s._id.slice(0,3)+"..."+s._id.slice(s._id.length-3, s._id.length+1)}</td>
+                    <td>{getDates(s.date)}</td>
+                    <td>{getTime(s.date)}</td>
+                    <td>{s.employeenumber}</td>
+                    <td>{s.state}</td>
+                    {/* <td>Name</td>
                       <td>Email</td>
                       <td>KKK</td>
                       <td>GGG</td>
                       <td>yyy</td>
                       <td>40</td> */}
+                  {/* </tr> */}
+                {/* ))} */}
+                {getData().map((data,i)=>(<tr key={i}>
+                  <td>{i + 1}</td>
+                  <td>{data[0].slice(0,3)+"..."+data[0].slice(data[0].length-3, data[0].length+1)}</td>
+                  <td>{data[1]}</td>
+                  <td>{data[2]}</td>
+                  <td>{data[3]}</td>
+                  <td>{data[4]}</td>
+                  <td>{data[5].split(" ")[0]}</td>
+                  <td>{data[6].slice(0,3)+"...@gmail.com"}</td>
+                  <td>{data[7]}</td>
+                  <td>{data[8]}</td>
+                  <td>{data[9]}</td>
                   </tr>
                 ))}
               </tbody>

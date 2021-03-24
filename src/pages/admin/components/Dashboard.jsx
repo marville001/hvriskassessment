@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 
 const CountCard = ({ name, count, countColor }) => {
   return (
-    <Col style={{ margin: "1px" }} sm={6} md={4} lg={3} xl={2} className="mt-3">
-      <Card style={{ padding: "5px" }}>
+    <Col style={{ margin: "1px" }} xs={12} md={4} lg={3} className="my-3 mx-2">
+      <Card style={{width: "200px", padding: "5px" }}>
         <Card.Body>
           <h5 style={{ fontSize: "15px" }} className="text-center">
             {name}
@@ -34,7 +34,7 @@ const Dashboard = () => {
     <div>
       <h4 style={{ padding: "20px 100px" }}>Dashboard</h4>
       <Container fluid>
-        <Row className="justify-content-center">
+        <Row >
           <CountCard name="All Sessions" count={sessions.length} />
           <CountCard name="All Employees" count={employees.length} />
           <CountCard name="All Admins" count={admins.length} />
@@ -43,7 +43,7 @@ const Dashboard = () => {
           <CountCard name="Ended Sessions" count={endedSessions.length} />
         </Row>
         <Row>
-          <Card style={{width: "100%", minHeight:"200px"}}>
+          <Card style={{width: "100%", minHeight:"200px", margin:"20px 25px"}}>
             <Card.Body>
               <h4>Graphical diagrams</h4>
             </Card.Body>

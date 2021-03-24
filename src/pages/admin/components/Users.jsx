@@ -11,6 +11,7 @@ import {
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addAdmin, addEmployee } from "../../../_actions";
+import { ExportCSV } from "../lib/ExportCSV";
 
 const Users = () => {
   const { admins, employees, addloading, adderror } = useSelector(
@@ -28,6 +29,8 @@ const Users = () => {
   const [empEmail, setEmpEmail] = useState("");
   const [empId, setEmpId] = useState("");
   const [empPassword, setEmpPassword] = useState("");
+  const [empPhone, setEmpPhone] = useState("");
+  const [empAddress, setEmpAddress] = useState("");
 
   const handleAddAdminShow = () => setAShow(true);
   const handleAdminClose = () => {
@@ -44,6 +47,8 @@ const Users = () => {
     setEmpEmail("");
     setEmpPassword("");
     setEmpId("");
+    setEmpPhone("");
+    setEmpAddress("");
   };
 
   const handleAddEmployee = () => {
@@ -53,6 +58,8 @@ const Users = () => {
         idnumber: empId,
         email: empEmail,
         password: empPassword,
+        phone: empPhone,
+        address: empAddress,
       })
     );
     setEShow(false);
@@ -68,7 +75,7 @@ const Users = () => {
   return (
     <div>
       <Container style={{ padding: "20px 0px 0px" }}>
-      {/* Admins */}
+        {/* Admins */}
         <Row
           style={{ padding: "10px 20px 10px 0px" }}
           className="justify-content-between"
@@ -145,7 +152,7 @@ const Users = () => {
                 <Form.Control
                   value={adminPassword}
                   onChange={(e) => setAdminPassword(e.target.value)}
-                  type="text"
+                  type="password"
                 />
               </Form.Group>
             </Form>
@@ -174,7 +181,10 @@ const Users = () => {
             {" "}
             <h4>Employees</h4>
           </Col>
-          <Button onClick={handleAddEmployeeShow}>Add User</Button>
+          <Col sm="4">
+            <Button onClick={handleAddEmployeeShow}>Add User</Button>
+            <ExportCSV csvData={employees} fileName={"employees"}/>
+          </Col>
         </Row>
         <Row className="justify-content-center">
           <Col>
@@ -187,6 +197,8 @@ const Users = () => {
                       <th>Name</th>
                       <th>Employee ID</th>
                       <th>Email</th>
+                      <th>Address</th>
+                      <th>Phone</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -196,6 +208,8 @@ const Users = () => {
                         <td>{employee.name}</td>
                         <td>{employee.idnumber}</td>
                         <td>{employee.email}</td>
+                        <td>{employee.address}</td>
+                        <td>{employee.phone}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -228,7 +242,7 @@ const Users = () => {
 
               <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>
-                  Email address<span className="text-danger">*</span>
+                  Email<span className="text-danger">*</span>
                 </Form.Label>
                 <Form.Control
                   value={empEmail}
@@ -247,6 +261,29 @@ const Users = () => {
                   type="text"
                 />
               </Form.Group>
+
+              <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label>
+                  Address<span className="text-danger">*</span>
+                </Form.Label>
+                <Form.Control
+                  value={empAddress}
+                  onChange={(e) => setEmpAddress(e.target.value)}
+                  type="text"
+                />
+              </Form.Group>
+
+              <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label>
+                  Cell Phone Number<span className="text-danger">*</span>
+                </Form.Label>
+                <Form.Control
+                  value={empPhone}
+                  onChange={(e) => setEmpPhone(e.target.value)}
+                  type="text"
+                />
+              </Form.Group>
+
               <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>
                   Password<span className="text-danger">*</span>
@@ -254,7 +291,7 @@ const Users = () => {
                 <Form.Control
                   value={empPassword}
                   onChange={(e) => setEmpPassword(e.target.value)}
-                  type="text"
+                  type="password"
                 />
               </Form.Group>
             </Form>

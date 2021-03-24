@@ -16,7 +16,7 @@ const CountCard = ({ name, count, countColor }) => {
           <h5 style={{fontSize: "16px"}} className="text-center">{name}</h5>
           <h4
             className="text-center"
-            style={{ color: countColor ? countColor : "black" }}
+            style={{ color: countColor ? countColor : "black",fontWeight:"bold",fontSize:"30px" }}
           >
             {count}
           </h4>
@@ -30,6 +30,10 @@ const Home = () => {
   const { sessions} = useSelector(
     (state) => state.sessionReducer
   );
+
+  const ongoingSessions = sessions.filter(session=>session.state==="ongoing");
+  const pausedSessions = sessions.filter(session=>session.state==="paused");
+  const endedSessions = sessions.filter(session=>session.state==="ended");
   
   return (
     <Wrapper>
@@ -41,9 +45,9 @@ const Home = () => {
               count={sessions.length}
               countColor="crimson"
             />
-            <CountCard name="Ongoing Sessions" count={1} countColor="green" />
-            <CountCard name="Paused Sessions" count={2} countColor="yellow" />
-            <CountCard name="Terminated Sessions" count={1} countColor="red" />
+            <CountCard name="Ongoing Sessions" count={ongoingSessions.length} countColor="green" />
+            <CountCard name="Paused Sessions" count={pausedSessions.length} countColor="yellow" />
+            <CountCard name="Terminated Sessions" count={endedSessions.length} countColor="red" />
           </Row>
         </Container>
 

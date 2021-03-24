@@ -44,7 +44,6 @@ const Sessions = () => {
     dispatch(createSession(sessionObj));
   };
 
-
   useEffect(() => {
     dispatch(
       loadAllSessions(user.idnumber, sessionsCount, keyword, state, searchby)
@@ -63,34 +62,46 @@ const Sessions = () => {
     return datestring;
   };
 
+  const getTime = (string) => {
+    const date = new Date(string);
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+
+    let z = hours < 12 ? "AM" : "PM";
+
+    const timestring = hours + ":" + minutes + ":" + seconds + " " + z;
+
+    return timestring;
+  };
+
   const [searchWord, setSearchWord] = useState("");
 
   return (
     <Wrapper>
       <div className="session-button-container">
-        
-          <Button
-            className="session-button"
-            disabled={loading ? true : false}
-            variant="primary"
-            type="submit"
-            onClick={createSessionSubmit}
-          >
-            {loading ? (
-              <>
-                <Spinner
-                  as="span"
-                  animation="grow"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                />
-                Loading...
-              </>
-            ) : (
-              "Start New Session"
-            )}
-          </Button>
+        <Button
+          className="session-button"
+          disabled={loading ? true : false}
+          variant="primary"
+          type="submit"
+          onClick={createSessionSubmit}
+        >
+          {loading ? (
+            <>
+              <Spinner
+                as="span"
+                animation="grow"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              Loading...
+            </>
+          ) : (
+            "Start New Session"
+          )}
+        </Button>
       </div>
       <Container>
         <Row
@@ -165,12 +176,14 @@ const Sessions = () => {
         </Row>
         <Row>
           <Col>
-            <Table striped bordered hover>
+            <Table responsive striped bordered hover size="sm">
               <thead>
                 <tr>
                   <th>#</th>
                   <th>Session Id</th>
-                  <th colSpan={2}>Date/Time</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Employee Number</th>
                   <th>State</th>
                   <th>Action</th>
                 </tr>
@@ -185,7 +198,9 @@ const Sessions = () => {
                     <tr>
                       <td>{index + 1}</td>
                       <td>{session._id}</td>
-                      <td colSpan={2}>{getDate(session.date)}</td>
+                      <td>{getDate(session.date)}</td>
+                      <td>{getTime(session.date)}</td>
+                      <td>{session.employeenumber}</td>
                       <td>{session.state}</td>
                       {session.state === "ongoing" && (
                         <td>

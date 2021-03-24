@@ -1,4 +1,9 @@
-export { userLogin, getProfileFetch, logoutUser } from "./userActions";
+export {
+  userLogin,
+  getProfileFetch,
+  logoutUser,
+  updateEmployee,
+} from "./userActions";
 
 export {
   createSession,
