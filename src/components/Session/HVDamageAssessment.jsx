@@ -34,7 +34,7 @@ const HVDamageAssessment = ({
         api + "/api/email/send",
         {
           body: "Click the link below to upload photos",
-          link: `${api}+/upload/${sessionId}`,
+          link: `${api}/upload/${sessionId}`,
           sessionId,
           subject: "Upload Photos",
         },

@@ -32,8 +32,8 @@ const VehicleIdentification = (props) => {
       setModel(vehicle.model);
       setYear(vehicle.year);
       setVin(vehicle.vin);
-      setLPState(vehicle.licence);
-      setLicence(vehicle.lpstate);
+      setLPState(vehicle.lpstate);
+      setLicence(vehicle.licence);
     }
   }, [vehicle]);
 
